@@ -68,6 +68,7 @@ La complejidad que entraña la elaboración de un espacio digital de este tipo r
 
 En este incremento se realizaran las tareas mínimas imprescindibles que darán resultado a la estructura base de la aplicación web.
 
+```mermaid
 flowchart LR
 %% STYLE ---
 style actor3 stroke-width:0px
@@ -94,6 +95,7 @@ style actor1 stroke-width:0px
     reg -. "«include»" .-> actor2
     reg -. "«include»" .-> actor3
     ed -. "«include»" .-> actor3
+```
 
 #### Tareas
 
