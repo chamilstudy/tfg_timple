@@ -71,15 +71,14 @@ En este incremento se realizaran las tareas mínimas imprescindibles que darán 
 ```mermaid
 flowchart LR
 %% STYLE ---
-style actor3 stroke-width:0px
-style actor2 stroke-width:0px
-style actor1 stroke-width:0px
-
     %% DIAGRAM ---
     %% Actors
-    actor1["👤 Usuario"]
-    actor2(("🔒 Supabase Auth"))
-    actor3["🗄️ Supabase DB"]
+    actor1["👤
+     Usuario"]
+    actor2(("🔒
+     Supabase Auth"))
+    actor3["🗄️
+     Supabase DB"]
 
     %% Cases
     ini([Iniciar Sesión])
