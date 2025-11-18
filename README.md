@@ -1,109 +1,105 @@
-<a href="https://demo-nextjs-with-supabase.vercel.app/">
-  <img alt="Next.js and Supabase Starter Kit - the fastest way to build apps with Next.js and Supabase" src="https://demo-nextjs-with-supabase.vercel.app/opengraph-image.png">
-  <h1 align="center">Next.js and Supabase Starter Kit</h1>
-</a>
+# Trabajo de Fin de Grado
 
-<p align="center">
- The fastest way to build apps with Next.js and Supabase
-</p>
+## Objetivos
 
-<p align="center">
-  <a href="#features"><strong>Features</strong></a> ·
-  <a href="#demo"><strong>Demo</strong></a> ·
-  <a href="#deploy-to-vercel"><strong>Deploy to Vercel</strong></a> ·
-  <a href="#clone-and-run-locally"><strong>Clone and run locally</strong></a> ·
-  <a href="#feedback-and-issues"><strong>Feedback and issues</strong></a>
-  <a href="#more-supabase-examples"><strong>More Examples</strong></a>
-</p>
-<br/>
+El **objetivo principal** de este proyecto es el desarrollo de una aplicación web específicamente diseñada para el aprendizaje, práctica y difusión de canciones para timple.
 
-## Features
+La complejidad que entraña la elaboración de un espacio digital de este tipo requiere de la definición de una serie de **objetivos específicos**:
 
-- Works across the entire [Next.js](https://nextjs.org) stack
-  - App Router
-  - Pages Router
-  - Middleware
-  - Client
-  - Server
-  - It just works!
-- supabase-ssr. A package to configure Supabase Auth to use cookies
-- Password-based authentication block installed via the [Supabase UI Library](https://supabase.com/ui/docs/nextjs/password-based-auth)
-- Styling with [Tailwind CSS](https://tailwindcss.com)
-- Components with [shadcn/ui](https://ui.shadcn.com/)
-- Optional deployment with [Supabase Vercel Integration and Vercel deploy](#deploy-your-own)
-  - Environment variables automatically assigned to Vercel project
+- **Disponibilidad de recursos didácticos**, en forma de páginas informativas con contenidos diseñados para iniciarse en el instrumento.
+- **Publicación de canciones**, donde se mostrará información esencial, letra, acordes y ciertas utilidades para su práctica.
+- **Existencia de una biblioteca de canciones**, permitiendo la búsqueda y acceso de las canciones publicadas.
+- **Creación de herramientas**, destinadas como complemento de la práctica del instrumento o a la creación de nuevos recursos.
+- **Espacio digital**, a través de las publicaciones de usuarios, caja de comentarios, sistema de "me gusta", perfiles…
 
-## Demo
+## Estado
 
-You can view a fully working demo at [demo-nextjs-with-supabase.vercel.app](https://demo-nextjs-with-supabase.vercel.app/).
+| **Incremento** | **Descripción**                                                                 | **Estado**    | **Duración** |
+| -------------- | ------------------------------------------------------------------------------- | ------------- | ------------ |
+| 1              | Implementación de la estructura base de la aplicación web.                      | En desarrollo | 0 horas      |
+| 2              | Desarrollo de los perfiles de usuario, publicaciones y biblioteca de canciones. | Pendiente     | 0 horas      |
+| 3              | Integración del algoritmo de generación o análisis de acordes.                  | Pendiente     | 0 horas      |
+| 4              | Implementación de utilidades interactivas dentro de las publicaciones.          | Pendiente     | 0 horas      |
+| 5              | Creación de las primeras publicaciones de prueba para validación del sistema.   | Pendiente     | 0 horas      |
+| 6              | Implementación de utilidades independientes y funciones adicionales.            | Pendiente     | 0 horas      |
+| 7              | Desarrollo de las páginas informativas y refinamiento final del sistema.        | Pendiente     | 0 horas      |
 
-## Deploy to Vercel
+## Desarrollo
 
-Vercel deployment will guide you through creating a Supabase account and project.
+### Requisitos
 
-After installation of the Supabase integration, all relevant environment variables will be assigned to the project so the deployment is fully functioning.
+| ID   | Requisito Funcional                                                                                    | Funcionalidad                  | Prioridad |
+| ---- | ------------------------------------------------------------------------------------------------------ | ------------------------------ | --------- |
+| RF1  | El usuario debe poder iniciar y cerrar sesión.                                                         | Usuario                        | Alta      |
+| RF2  | El usuario debe poder registrarse utilizando su correo electrónico, contraseña y un nombre de usuario. | Usuario                        | Alta      |
+| RF3  | El usuario debe poder modificar su perfil.                                                             | Usuario                        | Alta      |
+| RF4  | Las publicaciones deben contener como mínimo, título, letra y acordes.                                 | Crear y editar publicaciones   | Alta      |
+| RF5  | Las publicaciones deben permitir las referencias de autores, libros u otras fuentes.                   | Crear y editar publicaciones   | Alta      |
+| RF6  | El usuario debe poder crear, editar y eliminar publicaciones como respuesta a una solicitud.           | Crear y editar publicaciones   | Alta      |
+| RF7  | El usuario debe poder crear, editar y eliminar publicaciones.                                          | Crear y editar publicaciones   | Alta      |
+| RF8  | El usuario debe poder visualizar una lista de acordes en las publicaciones.                            | Utilidades en publicaciones    | Alta      |
+| RF9  | El usuario debe poder activar y desactivar el autoscroll en una publicación.                           | Utilidades en publicaciones    | Alta      |
+| RF10 | El usuario debe poder seleccionar una notación preferida.                                              | Utilidades en publicaciones    | Alta      |
+| RF11 | El usuario debe poder usar utilidades en publicaciones (como acordes, transporte, etc.)                | Utilidades en publicaciones    | Alta      |
+| RF12 | El usuario debe poder transportar los acordes de una publicación.                                      | Utilidades en publicaciones    | Media     |
+| RF13 | El usuario debe poder ver guías de rasgueos.                                                           | Utilidades en publicaciones    | Media     |
+| RF14 | El usuario debe poder compartir publicaciones vía enlace o redes sociales.                             | Utilidades en publicaciones    | Media     |
+| RF15 | El usuario debe poder imprimir o descargar una publicación.                                            | Utilidades en publicaciones    | Baja      |
+| RF16 | El usuario debe poder visualizar una biblioteca de canciones.                                          | Biblioteca de canciones        | Alta      |
+| RF17 | El usuario debe poder acceder a una calculadora de escalas y notas.                                    | Calculadora de escalas y notas | Alta      |
+| RF18 | El usuario debe poder acceder a un diccionario de acordes.                                             | Diccionario de acordes         | Alta      |
+| RF19 | El afinador interactivo debe mostrar las cuerdas, afinación objetivo y afinación actual.               | Afinador                       | Alta      |
+| RF20 | El usuario debe poder acceder a un afinador interactivo.                                               | Afinador                       | Media     |
+| RF21 | El usuario debe poder comentar en publicaciones.                                                       | Comentar publicaciones         | Media     |
+| RF22 | El usuario debe poder puntuar una publicación.                                                         | Puntuar publicaciones          | Media     |
+| RF23 | El usuario debe poder acceder a páginas informativas sobre el instrumento.                             | Cursos y guías                 | Media     |
+| RF24 | El usuario debe poder guardar canciones en su carpeta personal.                                        | Guardar canciones              | Baja      |
+| RF25 | El usuario debe poder solicitar canciones.                                                             | Solicitar nuevas canciones     | Baja      |
+| RF26 | El sistema debe mostrar fecha y hora de creación o última modificación.                                | Solicitar nuevas canciones     | Alta      |
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&project-name=nextjs-with-supabase&repository-name=nextjs-with-supabase&demo-title=nextjs-with-supabase&demo-description=This+starter+configures+Supabase+Auth+to+use+cookies%2C+making+the+user%27s+session+available+throughout+the+entire+Next.js+app+-+Client+Components%2C+Server+Components%2C+Route+Handlers%2C+Server+Actions+and+Middleware.&demo-url=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2F&external-id=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&demo-image=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2Fopengraph-image.png)
+| ID   | Requisito No Funcional                                                                                                                              | Prioridad |
+| ---- | --------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
+| RNF1 | El sistema debe ser responsivo, adaptándose a diferentes tamaños de pantalla y dispositivos.                                                        | Alta      |
+| RNF2 | El sistema debe incluir una descripción textual (`alt`) en todas las imaganes.                                                                      | Alta      |
+| RNF3 | El sistema debe incluir un `aria-label` o `aria-labelledby` en todos los elementos interactivos, describiendo su función para lectores de pantalla. | Alta      |
+| RNF4 | El sistema debe proporcionar navegación mediante un encabezado (header) y un pie de página (footer) consistentes en todas las vistas.               | Alta      |
 
-The above will also clone the Starter kit to your GitHub, you can clone that locally and develop locally.
+### Incremento 1
 
-If you wish to just develop locally and not deploy to Vercel, [follow the steps below](#clone-and-run-locally).
+En este incremento se realizaran las tareas mínimas imprescindibles que darán resultado a la estructura base de la aplicación web.
 
-## Clone and run locally
+flowchart LR
+%% STYLE ---
+style actor3 stroke-width:0px
+style actor2 stroke-width:0px
+style actor1 stroke-width:0px
 
-1. You'll first need a Supabase project which can be made [via the Supabase dashboard](https://database.new)
+    %% DIAGRAM ---
+    %% Actors
+    actor1["👤 Usuario"]
+    actor2(("🔒 Supabase Auth"))
+    actor3["🗄️ Supabase DB"]
 
-2. Create a Next.js app using the Supabase Starter template npx command
+    %% Cases
+    ini([Iniciar Sesión])
+    reg([Registrarse])
+    ed([Editar Perfil])
 
-   ```bash
-   npx create-next-app --example with-supabase with-supabase-app
-   ```
+    %% Relationships
+    actor1 --> ini
+    actor1 --> reg
+    actor1 --> ed
 
-   ```bash
-   yarn create next-app --example with-supabase with-supabase-app
-   ```
+    ini -. "«include»" .-> actor2
+    reg -. "«include»" .-> actor2
+    reg -. "«include»" .-> actor3
+    ed -. "«include»" .-> actor3
 
-   ```bash
-   pnpm create next-app --example with-supabase with-supabase-app
-   ```
+#### Tareas
 
-3. Use `cd` to change into the app's directory
-
-   ```bash
-   cd with-supabase-app
-   ```
-
-4. Rename `.env.example` to `.env.local` and update the following:
-
-  ```env
-  NEXT_PUBLIC_SUPABASE_URL=[INSERT SUPABASE PROJECT URL]
-  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=[INSERT SUPABASE PROJECT API PUBLISHABLE OR ANON KEY]
-  ```
-  > [!NOTE]
-  > This example uses `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, which refers to Supabase's new **publishable** key format.
-  > Both legacy **anon** keys and new **publishable** keys can be used with this variable name during the transition period. Supabase's dashboard may show `NEXT_PUBLIC_SUPABASE_ANON_KEY`; its value can be used in this example.
-  > See the [full announcement](https://github.com/orgs/supabase/discussions/29260) for more information.
-
-  Both `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` can be found in [your Supabase project's API settings](https://supabase.com/dashboard/project/_?showConnect=true)
-
-5. You can now run the Next.js local development server:
-
-   ```bash
-   npm run dev
-   ```
-
-   The starter kit should now be running on [localhost:3000](http://localhost:3000/).
-
-6. This template comes with the default shadcn/ui style initialized. If you instead want other ui.shadcn styles, delete `components.json` and [re-install shadcn/ui](https://ui.shadcn.com/docs/installation/next)
-
-> Check out [the docs for Local Development](https://supabase.com/docs/guides/getting-started/local-development) to also run Supabase locally.
-
-## Feedback and issues
-
-Please file feedback and issues over on the [Supabase GitHub org](https://github.com/supabase/supabase/issues/new/choose).
-
-## More Supabase examples
-
-- [Next.js Subscription Payments Starter](https://github.com/vercel/nextjs-subscription-payments)
-- [Cookie-based Auth and the Next.js 13 App Router (free course)](https://youtube.com/playlist?list=PL5S4mPUpp4OtMhpnp93EFSo42iQ40XjbF)
-- [Supabase Auth and the Next.js App Router](https://github.com/supabase/supabase/tree/master/examples/auth/nextjs)
+| **Tarea**                                                                                                                                           | **Estado** | **Duración** |
+| --------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------------ |
+| **Análisis**                                                                                                                                        | Pendiente  | 0 horas      |
+| **Diseño de formulario de inicio de sesión y registro.**                                                                                            | Pendiente  | 0 horas      |
+| **Configuración de entorno de desarrollo**, creación de proyecto Next.js utilizando template de Supabase con autenticación y limpieza del proyecto. | Finalizado | 30 minutos   |
+| **Implementación**                                                                                                                                  | Pendiente  | 0 horas      |
