@@ -1,9 +1,9 @@
-| **Incremento** | **Descripción**                                                                 | **Estado**       |
-| -------------- | ------------------------------------------------------------------------------- | ---------------- |
-| 1              | Implementación de la estructura base del sistema y la arquitectura web inicial. | 🔄 En desarrollo |
-| 2              | Desarrollo de los perfiles de usuario, publicaciones y biblioteca de canciones. | 🛑 Sin empezar   |
-| 3              | Integración del algoritmo de generación o análisis de acordes.                  | 🛑 Sin empezar   |
-| 4              | Implementación de utilidades interactivas dentro de las publicaciones.          | 🛑 Sin empezar   |
-| 5              | Creación de las primeras publicaciones de prueba para validación del sistema.   | 🛑 Sin empezar   |
-| 6              | Implementación de utilidades independientes y funciones adicionales.            | 🛑 Sin empezar   |
-| 7              | Desarrollo de las páginas informativas y refinamiento final del sistema.        | 🛑 Sin empezar   |
+| **Incremento** | **Descripción**                                                                                | **Estado**       |
+| -------------- | ---------------------------------------------------------------------------------------------- | ---------------- |
+| 1              | Configuración del proyecto, implementación de autenticación y desarrollo de perfil de usuario. | 🔄 En desarrollo |
+| 2              | Implementación de páginas para la visualización y creación de publicaciones.                   | 🛑 Sin empezar   |
+| 2              | Desarrollo de biblioteca de canciones.                                                         | 🛑 Sin empezar   |
+| 3              | Desarrollo de algoritmo de cálculo de acordes.                                                 | 🛑 Sin empezar   |
+| 4              | Implementación de utilidades en publicaciones.                                                 | 🛑 Sin empezar   |
+| 5              | Implementación de cajón de comentarios.                                                        | 🛑 Sin empezar   |
+| 6              | Desarrollo de páginas informativas (lecciones, manual de usuario y preguntas frecuentes)       | 🛑 Sin empezar   |
