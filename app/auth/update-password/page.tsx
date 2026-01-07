@@ -1,11 +1,17 @@
-import { UpdatePasswordForm } from "@/components/update-password-form";
+import { UpdatePasswordForm } from "@/components/auth/update-password-form";
+import { Header } from "@/components/ui/header";
+import { Footer } from "@/components/ui/footer";
 
 export default function Page() {
   return (
-    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
-      <div className="w-full max-w-sm">
+    <>
+      <div className="min-h-dvh w-full flex flex-col justify-between items-center">
+        <Header />
         <UpdatePasswordForm />
+        <div></div>
       </div>
-    </div>
+
+      <Footer />
+    </>
   );
 }

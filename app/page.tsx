@@ -1,51 +1,73 @@
-import { DeployButton } from "@/components/deploy-button";
-import { EnvVarWarning } from "@/components/env-var-warning";
-import { AuthButton } from "@/components/auth-button";
-import { Hero } from "@/components/hero";
-import { ThemeSwitcher } from "@/components/theme-switcher";
-import { ConnectSupabaseSteps } from "@/components/tutorial/connect-supabase-steps";
-import { SignUpUserSteps } from "@/components/tutorial/sign-up-user-steps";
-import { hasEnvVars } from "@/lib/utils";
+import { Header } from "@/components/ui/header";
+import { Footer } from "@/components/ui/footer";
+import Image from "next/image";
+import timple_1 from "@/public/images/timple_1.jpeg";
+import HeroTitle from "@/components/ui/titles/hero-title";
+import Title from "@/components/ui/titles/title";
+import { Button } from "@/components/ui/input/button";
 import Link from "next/link";
+
+import { HelpCircle, BookUser } from "lucide-react";
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col items-center">
-      <div className="flex-1 w-full flex flex-col gap-20 items-center">
-        <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-          <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
-            <div className="flex gap-5 items-center font-semibold">
-              <Link href={"/"}>Next.js Supabase Starter</Link>
-              <div className="flex items-center gap-2">
-                <DeployButton />
-              </div>
-            </div>
-            {!hasEnvVars ? <EnvVarWarning /> : <AuthButton />}
-          </div>
-        </nav>
-        <div className="flex-1 flex flex-col gap-20 max-w-5xl p-5">
-          <Hero />
-          <main className="flex-1 flex flex-col gap-6 px-4">
-            <h2 className="font-medium text-xl mb-4">Next steps</h2>
-            {hasEnvVars ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
-          </main>
-        </div>
-
-        <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
-          <p>
-            Powered by{" "}
-            <a
-              href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-              target="_blank"
-              className="font-bold hover:underline"
-              rel="noreferrer"
-            >
-              Supabase
-            </a>
-          </p>
-          <ThemeSwitcher />
-        </footer>
+    <>
+      <div className="min-h-dvh w-full flex flex-col justify-start items-center bg-gradient-to-b from-primary from-10% to-blue-900">
+        <Header variant="negative" />
       </div>
-    </main>
+      <Footer />
+    </>
   );
 }
+
+/**
+ <div className=" w-full bg-input relative grid items-center justify-center ">
+          <div className="bg-card z-50 p-10 m-6 my-16 rounded-xl max-w-sm grid gap-6">
+            <HeroTitle
+              title="¡Unete a Timple Tabs!"
+              description="Unete para colaborar en la principal plataforma de difusión del timple"
+            />
+            <Button className="w-full" variant="outline" asChild>
+              <Link href="/register">¡Registrate Ahora!</Link>
+            </Button>
+          </div>
+          <Image
+            src={timple_1}
+            alt="Hola"
+            fill // hace que la imagen ocupe todo el contenedor
+            className="object-cover opacity-50"
+          />
+        </div>
+ */
+
+/**
+         <div className="flex flex-row flex-wrap p-6 gap-6 pt-16 max-w-3xl">
+          <div className="bg-white p-6 rounded grid gap-3 flex-1">
+            <Title
+              title="¿Alguna Duda?"
+              description="Echa un vistazo a las preguntas frecuentes"
+            />
+            <Button variant="outline" className="h-min self-end">
+              Ir al FAQ
+            </Button>
+          </div>
+          <div className="bg-white p-6 rounded grid gap-3 flex-1">
+            <Title
+              title="¿Necesitas Ayuda?"
+              description="Visita nuestro manual del usuario"
+            />
+            <Button variant="outline" className="h-min self-end">
+              Ir al Manual
+            </Button>
+          </div>
+          <div className="bg-white p-6 rounded grid gap-3 flex-1">
+            <Title
+              title="¿Aún no estas registrado?"
+              description="Hazte una cuenta en pocos pasos"
+            />
+            <Button variant="outline" className="h-min self-end">
+              Registrarse
+            </Button>
+          </div>
+        </div>
+         */
