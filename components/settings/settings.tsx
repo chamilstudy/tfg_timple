@@ -1,14 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { notFound } from "next/navigation";
 
 import { EditProfileForm } from "@/components/settings/edit-profile/edit-profile";
 import { EditAccountForm } from "@/components/settings/edit-account/edit-account";
 import ProfileLegal from "@/components/settings/profile-legal";
 import HeroTitle from "@/components/ui/titles/hero-title";
 
-import { fetchPrivateProfileAction } from "@/lib/user/fetch-private-profile";
-import { fetchPublicProfileAction } from "@/lib/user/fetch-public-profile";
+import { fetchPrivateProfileAction } from "@/lib/domains/user/fetch-private-profile";
+import { fetchPublicProfileAction } from "@/lib/domains/user/fetch-public-profile";
 
 export default function Settings() {
   const [isLoading, setIsLoading] = useState(true);
@@ -18,12 +19,13 @@ export default function Settings() {
 
   const fetchProfile = async () => {
     setIsLoading(true);
-    const resultProfileData = await fetchPublicProfileAction();
-    setUserName(resultProfileData.data.user_name);
-    setDescription(resultProfileData.data.description);
+    const result = await fetchPrivateProfileAction();
 
-    const resultAccounteData = await fetchPrivateProfileAction();
-    setEmail(resultAccounteData.data.email);
+    if ("error" in result) return notFound();
+
+    setUserName(result.data.user_name);
+    setDescription(result.data.description);
+    setEmail(result.data.email);
 
     setIsLoading(false);
   };

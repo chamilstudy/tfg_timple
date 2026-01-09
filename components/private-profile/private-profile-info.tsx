@@ -8,7 +8,7 @@ import { Settings } from "lucide-react";
 
 import { Button } from "@/components/ui/input/button";
 
-import { fetchPublicProfileAction } from "@/lib/user/fetch-public-profile";
+import { fetchPublicProfileAction } from "@/lib/domains/user/fetch-public-profile";
 
 export default function PrivateProfileInfo() {
   const [profileName, setProfileName] = useState("");

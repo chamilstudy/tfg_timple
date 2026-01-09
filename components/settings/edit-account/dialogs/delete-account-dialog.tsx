@@ -7,8 +7,8 @@ import Dialog from "@/components/ui/dialog/dialog";
 import HeroTitle from "@/components/ui/titles/hero-title";
 import { Button } from "@/components/ui/input/button";
 
-import { deleteAccountAction } from "@/lib/user/delete-account";
-import { UserErrorFields, userErrorMap } from "@/lib/user/user-errors";
+import { deleteAccountAction } from "@/lib/domains/user/delete-account";
+import { UserErrorFields, userErrorMap } from "@/lib/errors/user-errors";
 
 type DeleteAccountDialogProps = {
   show: boolean;

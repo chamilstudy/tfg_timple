@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { cn } from "@/lib/utils"; // <-- importa tu función cn
+import { cn } from "@/lib/utils";
 
 type ProfileInfoProps = {
   profile: {

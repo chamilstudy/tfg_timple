@@ -10,8 +10,8 @@ import { Label } from "@/components/ui/input/label";
 import HeroTitle from "@/components/ui/titles/hero-title";
 import { InfoMessage } from "@/components/ui/input/info-message";
 
-import { AuthErrorFields, authErrorMap } from "@/lib/auth/auth-errors";
-import { requestPasswordAction } from "@/lib/auth/request-password";
+import { AuthErrorFields, authErrorMap } from "@/lib/errors/auth-errors";
+import { requestPasswordAction } from "@/lib/domains/auth/request-password";
 
 export function ForgotPasswordForm() {
   const [email, setEmail] = useState("");

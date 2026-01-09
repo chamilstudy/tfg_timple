@@ -13,12 +13,12 @@ import SaveButton from "@/components/ui/buttons/save-button";
 import CancelButton from "@/components/ui/buttons/cancel-button";
 import { InfoMessage } from "@/components/ui/input/info-message";
 
-import { updatePasswordAction } from "@/lib/auth/update-password";
+import { updatePasswordAction } from "@/lib/domains/auth/update-password";
 import {
   AuthErrorCode,
   AuthErrorFields,
   authErrorMap,
-} from "@/lib/auth/auth-errors";
+} from "@/lib/errors/auth-errors";
 
 type EditEmailDialogProps = {
   show: boolean;

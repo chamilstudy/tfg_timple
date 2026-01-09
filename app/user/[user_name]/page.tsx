@@ -3,7 +3,7 @@ import { Footer } from "@/components/ui/footer";
 import PublicProfileInfo from "@/components/public-profile/public-profile-info";
 import { notFound } from "next/navigation";
 
-import { fetchPublicProfileAction } from "@/lib/public/fetch-public-profile";
+import { fetchPublicProfileAction } from "@/lib/domains/public/fetch-public-profile";
 
 export default async function PublicProfile({
   params,
@@ -23,7 +23,7 @@ export default async function PublicProfile({
         <Header />
         {<PublicProfileInfo profile={result.data} />}
       </div>
-      
+
       <Footer />
     </>
   );

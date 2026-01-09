@@ -13,8 +13,8 @@ import SaveButton from "@/components/ui/buttons/save-button";
 import CancelButton from "@/components/ui/buttons/cancel-button";
 import { InfoMessage } from "@/components/ui/input/info-message";
 
-import { updateUserNameAction } from "@/lib/user/update-username";
-import { authErrorMap, AuthErrorFields } from "@/lib/auth/auth-errors";
+import { updateUserNameAction } from "@/lib/domains/user/update-username";
+import { authErrorMap, AuthErrorFields } from "@/lib/errors/auth-errors";
 
 type EditEmailDialogProps = {
   userName: string;
@@ -44,7 +44,7 @@ export function EditUserNameDialog({
 
     const result = await updateUserNameAction({ user_name: newUserName });
 
-    if (result.error) {
+    if ("error" in result) {
       setError(authErrorMap[result.error] ?? { unknown: result.error });
       setIsLoading(false);
       return;

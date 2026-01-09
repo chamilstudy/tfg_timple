@@ -7,8 +7,8 @@ import Dialog from "@/components/ui/dialog/dialog";
 import HeroTitle from "@/components/ui/titles/hero-title";
 import { Button } from "@/components/ui/input/button";
 
-import { signOutAction } from "@/lib/user/sign-out";
-import { userErrorMap, UserErrorFields } from "@/lib/user/user-errors";
+import { signOutAction } from "@/lib/domains/user/sign-out";
+import { userErrorMap, UserErrorFields } from "@/lib/errors/user-errors";
 
 type EditEmailDialogProps = {
   show: boolean;

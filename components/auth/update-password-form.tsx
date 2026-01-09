@@ -11,12 +11,12 @@ import { Label } from "@/components/ui/input/label";
 import { InfoMessage } from "../ui/input/info-message";
 
 import { createClient } from "@/lib/supabase/client";
-import { updatePasswordAction } from "@/lib/auth/update-password";
+import { updatePasswordAction } from "@/lib/domains/auth/update-password";
 import {
   AuthErrorFields,
   authErrorMap,
   AuthErrorCode,
-} from "@/lib/auth/auth-errors";
+} from "@/lib/errors/auth-errors";
 
 export function UpdatePasswordForm() {
   const [password, setPassword] = useState("");
@@ -50,7 +50,7 @@ export function UpdatePasswordForm() {
 
     const result = await updatePasswordAction({ password });
 
-    if (result.error)
+    if ("error" in result)
       setError(authErrorMap[result.error] ?? { unknown: result.error });
     else router.push("/profile");
 

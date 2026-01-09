@@ -12,12 +12,12 @@ import { Label } from "@/components/ui/input/label";
 import HeroTitle from "@/components/ui/titles/hero-title";
 import { InfoMessage } from "@/components/ui/input/info-message";
 
-import { signUpAction } from "@/lib/auth/signup";
+import { signUpAction } from "@/lib/domains/auth/signup";
 import {
   AuthErrorFields,
   AuthErrorCode,
   authErrorMap,
-} from "@/lib/auth/auth-errors";
+} from "@/lib/errors/auth-errors";
 
 export function SignUpForm() {
   const [userName, setUserName] = useState("");

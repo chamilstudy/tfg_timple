@@ -12,8 +12,8 @@ import SaveButton from "@/components/ui/buttons/save-button";
 import CancelButton from "@/components/ui/buttons/cancel-button";
 import { InfoMessage } from "@/components/ui/input/info-message";
 
-import { AuthErrorFields, authErrorMap } from "@/lib/auth/auth-errors";
-import { updateEmailAction } from "@/lib/auth/update-email";
+import { AuthErrorFields, authErrorMap } from "@/lib/errors/auth-errors";
+import { updateEmailAction } from "@/lib/domains/auth/update-email";
 
 type EditEmailDialogProps = {
   email: string;
@@ -39,7 +39,7 @@ export function EditEmailDialog({
 
     const result = await updateEmailAction({ email: newEmail });
 
-    if (result.error)
+    if ("error" in result)
       setError(authErrorMap[result.error] ?? { unknown: result.error });
 
     setPage(page + 1);

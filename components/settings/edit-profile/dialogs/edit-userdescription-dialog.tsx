@@ -11,9 +11,9 @@ import SaveButton from "@/components/ui/buttons/save-button";
 import CancelButton from "@/components/ui/buttons/cancel-button";
 import { InfoMessage } from "@/components/ui/input/info-message";
 
-import { updateDescriptionAction } from "@/lib/user/update-description";
+import { updateDescriptionAction } from "@/lib/domains/user/update-description";
 
-import { userErrorMap, UserErrorFields } from "@/lib/user/user-errors";
+import { userErrorMap, UserErrorFields } from "@/lib/errors/user-errors";
 
 type EditUserDescriptionDialogProps = {
   description: string;
@@ -44,7 +44,7 @@ export function EditUserDescriptionDialog({
       description: newUserDescription,
     });
 
-    if (result.error) {
+    if ("error" in result) {
       setError(userErrorMap[result.error] ?? { unknown: result.error });
       setIsLoading(false);
       return;

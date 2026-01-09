@@ -11,8 +11,8 @@ import { Input } from "@/components/ui/input/input";
 import { Label } from "@/components/ui/input/label";
 import { InfoMessage } from "@/components/ui/input/info-message";
 
-import { login } from "@/lib/auth/login";
-import { AuthErrorFields, authErrorMap } from "@/lib/auth/auth-errors";
+import { login } from "@/lib/domains/auth/login";
+import { AuthErrorFields, authErrorMap } from "@/lib/errors/auth-errors";
 
 export function LoginForm() {
   const router = useRouter();
@@ -32,7 +32,7 @@ export function LoginForm() {
 
     const result = await login({ email, password });
 
-    if (result.error) setError(authErrorMap[result.error]);
+    if ("error" in result) setError(authErrorMap[result.error]);
     else router.push("/profile");
 
     setIsLoading(false);
