@@ -1,6 +1,6 @@
 "use server";
 
-import { AuthErrorCode } from "@/lib/auth/auth-errors";
+import { AuthErrorCode } from "@/lib/errors/auth-errors";
 import { createClient } from "@/lib/supabase/server";
 
 type CheckUserNameExistsResult =

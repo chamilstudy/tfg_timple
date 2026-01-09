@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { checkUserNameAvailable } from "@/lib/actions/check-username-available";
 import { createClient } from "@/lib/supabase/server";
-import { AuthErrorCode } from "@/lib/auth/auth-errors";
+import { AuthErrorCode } from "@/lib/errors/auth-errors";
 
 vi.mock("next/headers", () => ({
   cookies: () => ({

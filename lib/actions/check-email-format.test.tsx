@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import { checkEmailFormat } from "@/lib/actions/check-email-format";
-import { AuthErrorCode } from "@/lib/auth/auth-errors";
+import { AuthErrorCode } from "@/lib/errors/auth-errors";
 
 describe("checkEmailFormat", () => {
   const checkEmailMock = vi.fn(checkEmailFormat);

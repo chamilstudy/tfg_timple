@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import { checkDescriptionFormat } from "@/lib/actions/check-description-format";
-import { UserErrorCode } from "@/lib/user/user-errors";
+import { UserErrorCode } from "@/lib/errors/user-errors";
 
 describe("checkDescriptionFormat", () => {
   const checkDescriptionMock = vi.fn(checkDescriptionFormat);

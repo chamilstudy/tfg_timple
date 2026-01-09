@@ -1,4 +1,4 @@
-import { UserErrorCode } from "@/lib/user/user-errors";
+import { UserErrorCode } from "@/lib/errors/user-errors";
 
 type CheckUserInfoResult =
   | {

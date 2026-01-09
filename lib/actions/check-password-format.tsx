@@ -1,4 +1,4 @@
-import { AuthErrorCode } from "@/lib/auth/auth-errors";
+import { AuthErrorCode } from "@/lib/errors/auth-errors";
 
 type CheckAccountInfoResult =
   | {
