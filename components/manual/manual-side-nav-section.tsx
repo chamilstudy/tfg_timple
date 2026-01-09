@@ -19,10 +19,10 @@ export default function ManualSideNavSection({
   const [show, setShow] = useState(true);
 
   return (
-    <div key={section.slug} className="grid gap-3 h-min ">
+    <div key={section.slug} className="grid gap-3 h-min">
       <div
         tabIndex={0}
-        className="font-bold flex justify-between gap-3 cursor-pointer custom-focus-ring"
+        className="font-bold flex justify-between gap-3 cursor-pointer custom-focus-ring hover:text-primary"
         onClick={() => setShow(!show)}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
@@ -40,7 +40,7 @@ export default function ManualSideNavSection({
             href={"/manual/" + section.slug + "/" + article.slug}
             key={article.slug}
             className={cn(
-              "text-sm w-full pl-3 border-l-4 border-background custom-focus-ring",
+              "text-sm w-full pl-3 border-l-4 border-background custom-focus-ring hover:text-primary",
               currentArticle == article.slug
                 ? "text-primary border-solid border-l-4 border-primary"
                 : ""

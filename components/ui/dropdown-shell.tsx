@@ -13,7 +13,7 @@ export default function DropdownShell({ title, body }: DropdownShellProps) {
 
   return (
     <div
-      className="w-full bg-card border border-border rounded divide-y divide-border cursor-pointer custom-focus-ring"
+      className="w-full bg-card border border-border rounded divide-y divide-border cursor-pointer custom-focus-ring hover:border-primary  hover:shadow transition-all ease-in-out"
       onClick={() => setShow(!show)}
       tabIndex={0}
       onKeyDown={(e) => {

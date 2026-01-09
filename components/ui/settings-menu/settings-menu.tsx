@@ -25,7 +25,7 @@ export default function SettingsMenu({
   return (
     <div
       className={cn(
-        "grid grid-flow-row rounded divide-y border overflow-hidden w-full shadow-sm min-h-32 transition-all duration-300 ease-in-out",
+        "grid grid-flow-row rounded divide-y border overflow-hidden w-full shadow min-h-32 transition-all ease-in-out",
         isLoading
           ? " bg-muted border-background divide-background shadow-none text-transparent animate-pulse"
           : "bg-card border-border divide-border",
@@ -40,7 +40,7 @@ export default function SettingsMenu({
             "flex items-center justify-between py-3 px-6 ",
             isLoading
               ? "cursor-progress"
-              : " hover:bg-primary hover:text-card cursor-pointer"
+              : "hover:bg-secondary hover:text-secondary-foreground cursor-pointer"
           )}
           onClick={option.action}
         >

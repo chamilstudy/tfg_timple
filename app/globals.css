@@ -9,6 +9,8 @@
     --foreground: 0 0% 0%;
     --primary: 217 75% 55%;
     --primary-foreground: 0 0% 100%;
+    --secondary: 217 75% 70%;
+    --secondary-foreground: 0 0% 100%;
     --destructive: 359 75% 55%;
     --destructive-foreground: 0 0% 100%;
     --muted: 0 0% 82%;
@@ -26,6 +28,8 @@
     --foreground: 0 0% 0%;
     --primary: 217 75% 55%;
     --primary-foreground: 0 0% 100%;
+    --secondary: 217 75% 70%;
+    --secondary-foreground: 0 0% 100%;
     --destructive: 359 75% 55%;
     --destructive-foreground: 0 0% 100%;
     --muted: 0 0% 82%;
