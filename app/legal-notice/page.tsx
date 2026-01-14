@@ -1,7 +1,13 @@
+import type { Metadata } from "next";
+
 import { Header } from "@/components/ui/header";
 import { Footer } from "@/components/ui/footer";
 import HeroTitle from "@/components/ui/titles/hero-title";
 import Title from "@/components/ui/titles/title";
+
+export const metadata: Metadata = {
+  title: "Aviso Legal - Timple Tabs",
+};
 
 export default function LegalNotice() {
   return (

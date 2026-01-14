@@ -1,7 +1,12 @@
+import type { Metadata } from "next";
+
 import { Header } from "@/components/ui/header";
 import { Footer } from "@/components/ui/footer";
-import HeroTitle from "@/components/ui/titles/hero-title";
 import { redirect } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: "Manual del Usuario - Timple Tabs",
+};
 
 export default function Manual() {
   redirect("/manual/getting-started/how-to-use-manual");

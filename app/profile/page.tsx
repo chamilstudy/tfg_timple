@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
+
 import { Header } from "@/components/ui/header";
 import { Footer } from "@/components/ui/footer";
 import PrivateProfileInfo from "@/components/private-profile/private-profile-info";
+
+export const metadata: Metadata = {
+  title: "Pefil - Timple Tabs",
+};
 
 export default async function ProtectedPage() {
   return (

@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
+
 import { Header } from "@/components/ui/header";
 import { Footer } from "@/components/ui/footer";
 import Settings from "@/components/settings/settings";
+
+export const metadata: Metadata = {
+  title: "Ajustes - Timple Tabs",
+};
 
 export default async function ProtectedPage() {
   return (

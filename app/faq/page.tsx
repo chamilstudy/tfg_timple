@@ -1,8 +1,14 @@
+import type { Metadata } from "next";
+
 import { Header } from "@/components/ui/header";
 import { Footer } from "@/components/ui/footer";
 import HeroTitle from "@/components/ui/titles/hero-title";
 import DropdownShell from "@/components/ui/dropdown-shell";
 import { faqData } from "@/components/faq/faq-data";
+
+export const metadata: Metadata = {
+  title: "Preguntas Frecuentes - Timple Tabs",
+};
 
 export default function TermsAndConditions() {
   return (
