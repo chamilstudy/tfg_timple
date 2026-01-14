@@ -7,8 +7,19 @@ import ManualSideNav from "@/components/manual/manual-side-nav";
 
 import { manualData } from "@/components/manual/manual-data";
 
-export const metadata: Metadata = {
+export var metadata: Metadata = {
   title: "Manual del Usuario - Timple Tabs",
+  description: "Manual del usuario de Timple Tabs.",
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    title: "Manual del Usuario - Timple Tabs",
+    description: "Manual del usuario de Timple Tabs.",
+    type: "website",
+    siteName: "Timple Tabs",
+  },
 };
 
 type ArticleProps = {
@@ -36,6 +47,21 @@ export default async function Article({
   if (!articleData || !sectionData) {
     return <div>Artículo no encontrado</div>;
   }
+
+  metadata = {
+    title: `${sectionData.title}: ${articleData.title} - Timple Tabs`,
+    description: `${sectionData.title}, ${articleData.title.toLowerCase}.`,
+    robots: {
+      index: true,
+      follow: true,
+    },
+    openGraph: {
+      title: `${sectionData.title}: ${articleData.title} - Timple Tabs`,
+      description: `${sectionData.title}, ${articleData.title.toLowerCase}.`,
+      type: "website",
+      siteName: "Timple Tabs",
+    },
+  };
 
   return (
     <>

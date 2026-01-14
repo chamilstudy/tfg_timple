@@ -1,6 +1,17 @@
+import { Metadata } from "next";
+
 import { UpdatePasswordForm } from "@/components/auth/update-password-form";
 import { Header } from "@/components/ui/header";
 import { Footer } from "@/components/ui/footer";
+
+export const metadata: Metadata = {
+  title: "Cambiar Contraseña - Timple Tabs",
+  description: "Cambio de contraseña de Timple Tabs.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default function Page() {
   return (

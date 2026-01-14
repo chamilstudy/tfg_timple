@@ -5,6 +5,17 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Recuperar Contraseña - Timple Tabs",
+  description: "Recuperación de contraseña en Timple Tabs.",
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    title: "Recuperar Contraseña - Timple Tabs",
+    description: "Recuperación de contraseña en Timple Tabs.",
+    type: "website",
+    siteName: "Timple Tabs",
+  },
 };
 
 export default function Page() {

@@ -7,6 +7,17 @@ import Title from "@/components/ui/titles/title";
 
 export const metadata: Metadata = {
   title: "Aviso Legal - Timple Tabs",
+  description: "Aviso legal de Timple Tabs.",
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    title: "Aviso Legal - Timple Tabs",
+    description: "Aviso legal de Timple Tabs.",
+    type: "profile",
+    siteName: "Timple Tabs",
+  },
 };
 
 export default function LegalNotice() {

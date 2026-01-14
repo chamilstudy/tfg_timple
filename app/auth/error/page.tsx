@@ -1,5 +1,16 @@
+import { Metadata } from "next";
+
 import { Header } from "@/components/ui/header";
 import { Footer } from "@/components/ui/footer";
+
+export const metadata: Metadata = {
+  title: "Error - Timple Tabs",
+  description: "Error de Timple Tabs.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default async function Page({
   searchParams,

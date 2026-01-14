@@ -1,9 +1,19 @@
 import Link from "next/link";
+import { Metadata } from "next";
 
 import { Footer } from "@/components/ui/footer";
 import { Header } from "@/components/ui/header";
 import HeroTitle from "@/components/ui/titles/hero-title";
 import { Button } from "@/components/ui/input/button";
+
+export const metadata: Metadata = {
+  title: "Registro Completado - Timple Tabs",
+  description: "Registro completado en Timple Tabs.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default function SignUp() {
   return (

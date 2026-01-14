@@ -8,6 +8,17 @@ import { faqData } from "@/components/faq/faq-data";
 
 export const metadata: Metadata = {
   title: "Preguntas Frecuentes - Timple Tabs",
+  description: "Preguntas frecuentes de Timple Tabs.",
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    title: "Preguntas Frecuentes - Timple Tabs",
+    description: "Preguntas frecuentes de Timple Tabs.",
+    type: "website",
+    siteName: "Timple Tabs",
+  },
 };
 
 export default function TermsAndConditions() {

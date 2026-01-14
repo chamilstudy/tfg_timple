@@ -40,15 +40,7 @@ export default function PublicProfileInfo({ profile }: ProfileInfoProps) {
           isLoading ? "bg-muted h-3 w-32 animate-pulse rounded" : ""
         )}
       >
-        {!isLoading &&
-          `Miembro desde ${new Date(profile.created_at).toLocaleDateString(
-            "es-ES",
-            {
-              day: "numeric",
-              month: "long",
-              year: "numeric",
-            }
-          )}`}
+        {!isLoading && `Miembro desde ${profile.created_at}`}
       </p>
     </div>
   );

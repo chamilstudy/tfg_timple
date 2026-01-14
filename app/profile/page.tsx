@@ -5,7 +5,12 @@ import { Footer } from "@/components/ui/footer";
 import PrivateProfileInfo from "@/components/private-profile/private-profile-info";
 
 export const metadata: Metadata = {
-  title: "Pefil - Timple Tabs",
+  title: "Perfil - Timple Tabs",
+  description: "Perfil privado.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default async function ProtectedPage() {

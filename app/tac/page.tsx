@@ -6,7 +6,18 @@ import HeroTitle from "@/components/ui/titles/hero-title";
 import Title from "@/components/ui/titles/title";
 
 export const metadata: Metadata = {
-  title: "Terminos y Condiciones - Timple Tabs",
+  title: "Términos y Condiciones - Timple Tabs",
+  description: "Términos y condiciones de Timple Tabs.",
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    title: "Términos y Condiciones - Timple Tabs",
+    description: "Términos y condiciones de Timple Tabs.",
+    type: "website",
+    siteName: "Timple Tabs",
+  },
 };
 
 export default function TermsAndConditions() {

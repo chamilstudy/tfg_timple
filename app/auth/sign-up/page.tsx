@@ -1,10 +1,22 @@
 import type { Metadata } from "next";
+
 import { Header } from "@/components/ui/header";
 import { Footer } from "@/components/ui/footer";
 import { SignUpForm } from "@/components/auth/sign-up-form";
 
 export const metadata: Metadata = {
   title: "Registro - Timple Tabs",
+  description: "Registro en Timple Tabs.",
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    title: "Registro - Timple Tabs",
+    description: "Registro en Timple Tabs.",
+    type: "website",
+    siteName: "Timple Tabs",
+  },
 };
 
 export default function Page() {

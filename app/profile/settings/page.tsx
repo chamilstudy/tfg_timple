@@ -6,6 +6,11 @@ import Settings from "@/components/settings/settings";
 
 export const metadata: Metadata = {
   title: "Ajustes - Timple Tabs",
+  description: "Ajustes de cuenta.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default async function ProtectedPage() {

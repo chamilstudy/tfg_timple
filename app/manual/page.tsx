@@ -6,6 +6,17 @@ import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Manual del Usuario - Timple Tabs",
+  description: "Manual del usuario de Timple Tabs.",
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    title: "Manual del Usuario - Timple Tabs",
+    description: "Manual del usuario de Timple Tabs.",
+    type: "website",
+    siteName: "Timple Tabs",
+  },
 };
 
 export default function Manual() {
