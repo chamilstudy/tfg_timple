@@ -48,7 +48,12 @@ export default function PrivateProfileInfo() {
         >
           {!isLoading && profileName}
         </h1>
-        <Button asChild size="sm" variant="outline">
+        <Button
+          asChild
+          size="sm"
+          variant="outline"
+          aria-label="Navegar a ajustes"
+        >
           <Link href="/profile/settings">
             <Settings />
             <span>Ajustes</span>

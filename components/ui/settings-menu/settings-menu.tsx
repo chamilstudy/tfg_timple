@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 import { InfoMessage } from "../input/info-message";
+import { title } from "process";
 
 type Option = {
   icon?: ReactNode;
@@ -35,6 +36,8 @@ export default function SettingsMenu({
       {options.map((option, index) => (
         <div
           key={index}
+          role="button"
+          aria-label={option.title}
           tabIndex={0}
           className={cn(
             "flex items-center justify-between py-3 px-6 ",

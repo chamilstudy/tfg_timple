@@ -32,7 +32,7 @@ export function Header({ className, variant }: HeaderProps) {
       <div className="w-full max-w-5xl flex justify-between items-center">
         <div className="flex flex-row flex-nowrap text-sm items-center gap-6">
           {variant == "negative" ? (
-            <Link href={"/"}>
+            <Link href={"/"} aria-label="Navegar a página principal">
               <Image
                 src={LogoNegative}
                 alt="Logo Timple Tabs"
@@ -41,7 +41,7 @@ export function Header({ className, variant }: HeaderProps) {
               />
             </Link>
           ) : (
-            <Link href={"/"}>
+            <Link href={"/"} aria-label="Navegar a página principal">
               <Image src={Logo} alt="Logo Timple Tabs" height={80} width={80} />
             </Link>
           )}

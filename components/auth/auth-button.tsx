@@ -13,7 +13,7 @@ export async function AuthButton() {
 
   return user ? (
     <div className="flex items-center gap-4">
-      <Button asChild size="sm">
+      <Button asChild size="sm" aria-label="Navegar a perfil del usuario">
         <Link href="/profile">
           <UserRound />
           <span className="hidden sm:inline">Perfil</span>
@@ -22,7 +22,12 @@ export async function AuthButton() {
     </div>
   ) : (
     <div className="flex gap-3">
-      <Button asChild size="sm" variant={"default"}>
+      <Button
+        asChild
+        size="sm"
+        variant={"default"}
+        aria-label="Navegar a inicio de sesión"
+      >
         <Link href="/auth/login">
           <LogIn />
           <span className="hidden sm:inline">Iniciar Sesión</span>
