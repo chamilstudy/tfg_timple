@@ -2,17 +2,42 @@
 
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { notFound } from "next/navigation";
+
+import { fetchPublicProfileAction } from "@/lib/domains/public/fetch-public-profile";
 
 type ProfileInfoProps = {
-  profile: {
-    user_name: string;
-    description: string;
-    created_at: string;
-  };
+  user_name: string;
 };
 
-export default function PublicProfileInfo({ profile }: ProfileInfoProps) {
+export default function PublicProfileInfo({ user_name }: ProfileInfoProps) {
+  const [userName, setUserName] = useState("");
+  const [description, setDescription] = useState("");
+  const [createdAt, setCreatedAt] = useState("");
+
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    const fetchProfile = async () => {
+      const result = await fetchPublicProfileAction({
+        user_name: user_name,
+      });
+
+      if ("error" in result) {
+        notFound();
+      }
+
+      setUserName(result.data.user_name);
+      setDescription(result.data.description);
+      setCreatedAt(result.data.created_at);
+
+      setIsLoading(false);
+    };
+
+    fetchProfile();
+  }, []);
 
   return (
     <div className="flex flex-col flex-nowrap gap-3 max-w-2xl w-full p-6 py-16">
@@ -23,7 +48,7 @@ export default function PublicProfileInfo({ profile }: ProfileInfoProps) {
             isLoading ? "bg-muted w-48 h-10 animate-pulse rounded" : "h-auto"
           )}
         >
-          {!isLoading && profile.user_name}
+          {!isLoading && userName}
         </h1>
       </span>
       <p
@@ -32,7 +57,7 @@ export default function PublicProfileInfo({ profile }: ProfileInfoProps) {
           isLoading ? "bg-muted h-4 w-full animate-pulse rounded" : ""
         )}
       >
-        {!isLoading && profile.description}
+        {!isLoading && description}
       </p>
       <p
         className={cn(
@@ -40,7 +65,7 @@ export default function PublicProfileInfo({ profile }: ProfileInfoProps) {
           isLoading ? "bg-muted h-3 w-32 animate-pulse rounded" : ""
         )}
       >
-        {!isLoading && `Miembro desde ${profile.created_at}`}
+        {!isLoading && `Miembro desde ${createdAt}`}
       </p>
     </div>
   );
