@@ -1,25 +1,28 @@
+// vitest
 import { describe, it, expect, vi } from "vitest";
+
+// supabase
 import { createClient } from "@/lib/supabase/server";
-import { signUpAction } from "./signup";
-import { checkEmailFormat } from "@/lib/actions/check-email-format";
-import { checkPasswordFormat } from "@/lib/actions/check-password-format";
-import { checkUserNameAvailable } from "@/lib/actions/check-username-available";
-import { AuthErrorCode } from "@/lib/errors/auth-errors";
+
+// domains
+import signUpAction from "./signup";
+
+// validators
+import checkUserNameAvailable from "@/lib/actions/validators/auth/check-username-available";
+
+// errors
+import { errorMessages } from "@/lib/errors/error";
+
+// mappers
+import toDomainResponseDTO from "@/lib/mappers/domain-response/domain-response.mapper";
+import toErrorDto from "@/lib/mappers/error/error.mapper";
 
 vi.mock("@/lib/supabase/server", () => ({
   createClient: vi.fn(),
 }));
 
-vi.mock("@/lib/actions/check-username-available", () => ({
-  checkUserNameAvailable: vi.fn(),
-}));
-
-vi.mock("@/lib/actions/check-email-format", () => ({
-  checkEmailFormat: vi.fn(),
-}));
-
-vi.mock("@/lib/actions/check-password-format", () => ({
-  checkPasswordFormat: vi.fn(),
+vi.mock("@/lib/actions/validators/auth/check-username-available", () => ({
+  default: vi.fn(),
 }));
 
 function createSupabaseSignUpMock({ error = null }: { error?: any } = {}) {
@@ -33,37 +36,32 @@ function createSupabaseSignUpMock({ error = null }: { error?: any } = {}) {
 describe("signUp", () => {
   it("user name error propagation", async () => {
     (createClient as any).mockResolvedValue(
-      createSupabaseSignUpMock({ error: null })
+      createSupabaseSignUpMock({ error: null }),
     );
-    (checkUserNameAvailable as any).mockResolvedValue({
-      error: AuthErrorCode.USERNAME_TAKEN,
-    });
-    (checkEmailFormat as any).mockReturnValue({
-      success: true,
-    });
-    (checkPasswordFormat as any).mockReturnValue({
-      success: true,
-    });
+
+    (checkUserNameAvailable as any).mockResolvedValue(
+      toDomainResponseDTO({
+        success: false,
+        error: toErrorDto("name", "ALREADY_EXISTS"),
+      }),
+    );
 
     const result = await signUpAction({
       userName: "newUser",
       email: "emaildomain.com",
       password: "123456",
     });
-    expect(result.error).toBe(AuthErrorCode.USERNAME_TAKEN);
+
+    expect(result.error.field).toBe("name");
+    expect(result.error.message).toBe("El nombre ya está en uso");
+    expect(result.error.message).toBe(errorMessages.name.ALREADY_EXISTS);
   });
 
   it("email error propagation", async () => {
     (createClient as any).mockResolvedValue(
-      createSupabaseSignUpMock({ error: null })
+      createSupabaseSignUpMock({ error: null }),
     );
     (checkUserNameAvailable as any).mockResolvedValue({
-      success: true,
-    });
-    (checkEmailFormat as any).mockReturnValue({
-      error: AuthErrorCode.INVALID_EMAIL,
-    });
-    (checkPasswordFormat as any).mockReturnValue({
       success: true,
     });
 
@@ -72,21 +70,18 @@ describe("signUp", () => {
       email: "emaildomain.com",
       password: "123456",
     });
-    expect(result.error).toBe(AuthErrorCode.INVALID_EMAIL);
+
+    expect(result.error.field).toBe("email");
+    expect(result.error.message).toBe("El email no es válido");
+    expect(result.error.message).toBe(errorMessages.email.INVALID);
   });
 
   it("password error propagation", async () => {
     (createClient as any).mockResolvedValue(
-      createSupabaseSignUpMock({ error: null })
+      createSupabaseSignUpMock({ error: null }),
     );
     (checkUserNameAvailable as any).mockResolvedValue({
       success: true,
-    });
-    (checkEmailFormat as any).mockReturnValue({
-      success: true,
-    });
-    (checkPasswordFormat as any).mockReturnValue({
-      error: AuthErrorCode.PASSWORD_TOO_SHORT,
     });
 
     const result = await signUpAction({
@@ -94,20 +89,17 @@ describe("signUp", () => {
       email: "email@domain.com",
       password: "12345",
     });
-    expect(result.error).toBe(AuthErrorCode.PASSWORD_TOO_SHORT);
+
+    expect(result.error.field).toBe("password");
+    expect(result.error.message).toBe("La contraseña es demasiado corta");
+    expect(result.error.message).toBe(errorMessages.password.TOO_SHORT);
   });
 
   it("supabase error", async () => {
     (createClient as any).mockResolvedValue(
-      createSupabaseSignUpMock({ error: new Error("DB error") })
+      createSupabaseSignUpMock({ error: new Error("DB error") }),
     );
     (checkUserNameAvailable as any).mockResolvedValue({
-      success: true,
-    });
-    (checkEmailFormat as any).mockReturnValue({
-      success: true,
-    });
-    (checkPasswordFormat as any).mockReturnValue({
       success: true,
     });
 
@@ -116,20 +108,17 @@ describe("signUp", () => {
       email: "email@domain.com",
       password: "123456",
     });
-    expect(result.error).toEqual(AuthErrorCode.INVALID_CREDENTIALS);
+
+    expect(result.error.field).toBe("session");
+    expect(result.error.message).toBe("Error desconocido");
+    expect(result.error.message).toEqual(errorMessages.session.UNKNOWN);
   });
 
   it("success", async () => {
     (createClient as any).mockResolvedValue(
-      createSupabaseSignUpMock({ error: null })
+      createSupabaseSignUpMock({ error: null }),
     );
     (checkUserNameAvailable as any).mockResolvedValue({
-      success: true,
-    });
-    (checkEmailFormat as any).mockReturnValue({
-      success: true,
-    });
-    (checkPasswordFormat as any).mockReturnValue({
       success: true,
     });
 

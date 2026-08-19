@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/input/button";
 import { createClient } from "@/lib/supabase/server";
-import { LogIn, UserRound } from "lucide-react";
+import { LogIn, Plus, UserRound } from "lucide-react";
+import CreateButton from "../ui/buttons/create-button";
 
-export async function AuthButton() {
+export default async function AuthButton() {
   const supabase = await createClient();
 
   // You can also use getUser() which will be slower.
@@ -13,6 +14,18 @@ export async function AuthButton() {
 
   return user ? (
     <div className="flex items-center gap-4">
+      <Button
+        asChild
+        size="sm"
+        variant="outline"
+        aria-label="Navegar a formulario de solicitud"
+      >
+        <Link href="/new-publication">
+          <Plus />
+          <span className="hidden sm:inline">Crear</span>
+        </Link>
+      </Button>
+
       <Button asChild size="sm" aria-label="Navegar a perfil del usuario">
         <Link href="/profile">
           <UserRound />

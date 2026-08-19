@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/input/button";
 
-export function EnvVarWarning() {
+export default function EnvVarWarning() {
   return (
     <div className="flex gap-4 items-center">
       <div className="flex gap-2">

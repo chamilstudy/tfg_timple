@@ -5,26 +5,27 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Mail, LockKeyhole, UserRound, LoaderCircle } from "lucide-react";
 
+// Components
 import { Checkbox } from "@/components/ui/input/checkbox";
 import { Button } from "@/components/ui/input/button";
 import { Input } from "@/components/ui/input/input";
-import { Label } from "@/components/ui/input/label";
-import HeroTitle from "@/components/ui/titles/hero-title";
-import { InfoMessage } from "@/components/ui/input/info-message";
+import { Label } from "@/components/ui/info/label";
+import HeroTitle from "@/components/ui/layout/hero-title";
+import InfoMessage from "@/components/ui/info/info-message";
 
-import { signUpAction } from "@/lib/domains/auth/signup";
-import {
-  AuthErrorFields,
-  AuthErrorCode,
-  authErrorMap,
-} from "@/lib/errors/auth-errors";
+// Server Functions
+import signUpAction from "@/lib/domains/auth/signup";
 
-export function SignUpForm() {
+// DTOs
+import { ErrorDTO } from "@/lib/dto/error/error.dto";
+import toErrorDto from "@/lib/mappers/error/error.mapper";
+
+export default function SignUpForm() {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-  const [error, setError] = useState<AuthErrorFields>({});
+  const [error, setError] = useState<ErrorDTO>();
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
@@ -33,18 +34,17 @@ export function SignUpForm() {
     e.preventDefault();
 
     setIsLoading(true);
-    setError({});
+    setError(undefined);
 
     if (password !== repeatPassword) {
-      setError(authErrorMap[AuthErrorCode.PASSWORD_NOT_MATCH]);
+      setError(toErrorDto("password", "NOT_MATCH"));
       setIsLoading(false);
       return;
     }
 
-    const result = await signUpAction({ userName, email, password });
+    const signUpResponse = await signUpAction({ userName, email, password });
 
-    if ("error" in result)
-      setError(authErrorMap[result.error] ?? { unknown: result.error });
+    if (!signUpResponse.success) setError(signUpResponse.error);
     else router.push("/auth/sign-up-success");
 
     setIsLoading(false);
@@ -70,11 +70,11 @@ export function SignUpForm() {
             value={userName}
             placeholder="Escribe tu nombre"
             onChange={(v) => setUserName(v.target.value)}
-            variant={error.userName ? "error" : "default"}
+            variant={error?.field == "name" ? "error" : "default"}
             required
           />
-          {error.userName && (
-            <InfoMessage message={error.userName} variant="error" />
+          {error?.field == "name" && (
+            <InfoMessage message={error.message} variant="error" />
           )}
         </div>
 
@@ -90,10 +90,12 @@ export function SignUpForm() {
             value={email}
             placeholder="Escribe tu correo"
             onChange={(e) => setEmail(e.target.value)}
-            variant={error.email ? "error" : "default"}
+            variant={error?.field == "email" ? "error" : "default"}
             required
           />
-          {error.email && <InfoMessage message={error.email} variant="error" />}
+          {error?.field == "email" && (
+            <InfoMessage message={error.message} variant="error" />
+          )}
         </div>
 
         <div className="grid gap-2">
@@ -111,7 +113,7 @@ export function SignUpForm() {
             value={password}
             placeholder="Escribe tu contraseña"
             onChange={(e) => setPassword(e.target.value)}
-            variant={error.password ? "error" : "default"}
+            variant={error?.field == "password" ? "error" : "default"}
             required
           />
         </div>
@@ -130,11 +132,11 @@ export function SignUpForm() {
             value={repeatPassword}
             placeholder="Repite tu contraseña"
             onChange={(e) => setRepeatPassword(e.target.value)}
-            variant={error.password ? "error" : "default"}
+            variant={error?.field == "password" ? "error" : "default"}
             required
           />
-          {error.password && (
-            <InfoMessage message={error["password"]} variant="error" />
+          {error?.field == "password" && (
+            <InfoMessage message={error.message} variant="error" />
           )}
         </div>
 

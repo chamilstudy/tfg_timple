@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
-import { Header } from "@/components/ui/header";
-import { Footer } from "@/components/ui/footer";
-import PrivateProfileInfo from "@/components/private-profile/private-profile-info";
+import Header from "@/components/ui/layout/header";
+import Footer from "@/components/ui/layout/footer";
+import PrivateProfileMain from "@/components/private-profile/private-profile-main";
 
 export const metadata: Metadata = {
   title: "Perfil - Timple Tabs",
@@ -18,7 +18,7 @@ export default async function ProtectedPage() {
     <>
       <div className="min-h-dvh w-full flex flex-col justify-start items-center">
         <Header />
-        <PrivateProfileInfo />
+        <PrivateProfileMain />
       </div>
       <Footer />
     </>

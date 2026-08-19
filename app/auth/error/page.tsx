@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
-import { Header } from "@/components/ui/header";
-import { Footer } from "@/components/ui/footer";
+import Header from "@/components/ui/layout/header";
+import Footer from "@/components/ui/layout/footer";
 
 export const metadata: Metadata = {
   title: "Error - Timple Tabs",

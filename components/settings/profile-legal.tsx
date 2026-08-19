@@ -1,9 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ScrollText, Info } from "lucide-react";
 
-import Title from "@/components/ui/titles/title";
+// Components
+import { ScrollText, Info } from "lucide-react";
+import SectionTitle from "../ui/layout/section-title";
 import SettingsMenu from "@/components/ui/settings-menu/settings-menu";
 
 export default function ProfileLegal() {
@@ -11,7 +12,7 @@ export default function ProfileLegal() {
 
   return (
     <div className="grid gap-3 w-full">
-      <Title
+      <SectionTitle
         title="Información legal"
         description="Aspectos legales relacionados con el uso del servicio"
       />

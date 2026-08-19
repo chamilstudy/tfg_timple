@@ -1,7 +1,8 @@
-import { EditEmailDialog } from "@/components/settings/edit-account/dialogs/edit-email-dialog";
-import { EditPasswordDialog } from "@/components/settings/edit-account/dialogs/edit-password-dialog";
-import { DeleteAccountDialog } from "@/components/settings/edit-account/dialogs/delete-account-dialog";
-import { SignOutDialog } from "@/components/settings/edit-account/dialogs/sign-out-dialog";
+// Components
+import EditEmailDialog from "@/components/ui/dialog/dialogs/edit-email-dialog";
+import EditPasswordDialog from "@/components/ui/dialog/dialogs/edit-password-dialog";
+import DeleteAccountDialog from "@/components/ui/dialog/dialogs/delete-account-dialog";
+import SignOutDialog from "@/components/ui/dialog/dialogs/sign-out-dialog";
 
 type EditAccDialogsProps = {
   email: string;

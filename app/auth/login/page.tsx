@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
-import { LoginForm } from "@/components/auth/login-form";
-import { Header } from "@/components/ui/header";
-import { Footer } from "@/components/ui/footer";
+import LoginForm from "@/components/auth/login-form";
+import Header from "@/components/ui/layout/header";
+import Footer from "@/components/ui/layout/footer";
 
 export const metadata: Metadata = {
   title: "Iniciar Sesión - Timple Tabs",

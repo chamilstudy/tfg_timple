@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 
 import { UpdatePasswordForm } from "@/components/auth/update-password-form";
-import { Header } from "@/components/ui/header";
-import { Footer } from "@/components/ui/footer";
+import Header from "@/components/ui/layout/header";
+import Footer from "@/components/ui/layout/footer";
 
 export const metadata: Metadata = {
   title: "Cambiar Contraseña - Timple Tabs",

@@ -1,6 +1,6 @@
 import { UpdatePasswordDTO } from "@/lib/dto/auth/update-password.dto";
 
-export function toUpdatePasswordDTO(row: any) {
+export default function toUpdatePasswordDTO(row: any): UpdatePasswordDTO {
   return {
     password: row.password,
   };

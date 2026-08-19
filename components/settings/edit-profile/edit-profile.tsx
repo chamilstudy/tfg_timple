@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { BookOpenText, UserRound } from "lucide-react";
 
-import Title from "@/components/ui/titles/title";
+// Components
+import { BookOpenText, UserRound } from "lucide-react";
+import SectionTitle from "@/components/ui/layout/section-title";
 import SettingsMenu from "@/components/ui/settings-menu/settings-menu";
 import EditProfileDialogs from "@/components/settings/edit-profile/edit-profile-dialogs";
 
@@ -14,7 +15,7 @@ type EditProfileFormProps = {
   onProfileUpdate: () => Promise<void>;
 };
 
-export function EditProfileForm({
+export default function EditProfileForm({
   isLoading,
   userName,
   description,
@@ -33,7 +34,7 @@ export function EditProfileForm({
       />
 
       <div className="grid gap-3 w-full">
-        <Title
+        <SectionTitle
           title="Perfil"
           description="Información pública sobre la cuenta de usuario"
         />

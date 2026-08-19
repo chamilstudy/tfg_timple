@@ -40,6 +40,10 @@ export default {
           foreground: "hsl(var(--input-foreground))",
         },
 
+        pressed: {
+          DEFAULT: "hsl(var(--pressed))",
+        },
+
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",

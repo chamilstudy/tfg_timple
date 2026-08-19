@@ -4,25 +4,22 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { LoaderCircle, LockKeyhole } from "lucide-react";
 
-import HeroTitle from "@/components/ui/titles/hero-title";
+import HeroTitle from "@/components/ui/layout/hero-title";
 import { Button } from "@/components/ui/input/button";
 import { Input } from "@/components/ui/input/input";
-import { Label } from "@/components/ui/input/label";
-import { InfoMessage } from "../ui/input/info-message";
+import { Label } from "@/components/ui/info/label";
+import InfoMessage from "../ui/info/info-message";
 
 import { createClient } from "@/lib/supabase/client";
-import { updatePasswordAction } from "@/lib/domains/auth/update-password";
-import {
-  AuthErrorFields,
-  authErrorMap,
-  AuthErrorCode,
-} from "@/lib/errors/auth-errors";
+import updatePasswordAction from "@/lib/domains/auth/update-password";
+import { ErrorDTO } from "@/lib/dto/error/error.dto";
+import toErrorDto from "@/lib/mappers/error/error.mapper";
 
 export function UpdatePasswordForm() {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
 
-  const [error, setError] = useState<AuthErrorFields>({});
+  const [error, setError] = useState<ErrorDTO>();
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
@@ -40,18 +37,17 @@ export function UpdatePasswordForm() {
     e.preventDefault();
 
     setIsLoading(true);
-    setError({});
+    setError(undefined);
 
     if (password !== repeatPassword) {
-      setError(authErrorMap[AuthErrorCode.PASSWORD_NOT_MATCH]);
+      setError(toErrorDto("password", "NOT_MATCH"));
       setIsLoading(false);
       return;
     }
 
     const result = await updatePasswordAction({ password });
 
-    if ("error" in result)
-      setError(authErrorMap[result.error] ?? { unknown: result.error });
+    if (result.error) setError(result.error);
     else router.push("/profile");
 
     setIsLoading(false);
@@ -72,7 +68,7 @@ export function UpdatePasswordForm() {
             autoComplete="new-password"
             type="password"
             placeholder="Escribe tu Contraseña"
-            variant={error["password"] ? "error" : "default"}
+            variant={error ? "error" : "default"}
             icon={<LockKeyhole />}
             required
             value={password}
@@ -87,19 +83,16 @@ export function UpdatePasswordForm() {
             autoComplete="new-password"
             type="password"
             placeholder="Escribe tu contraseña"
-            variant={error.password ? "error" : "default"}
+            variant={error ? "error" : "default"}
             icon={<LockKeyhole />}
             required
             value={repeatPassword}
             onChange={(e) => setRepeatPassword(e.target.value)}
           />
-          {error.password && (
-            <InfoMessage message={error.password} variant="error" />
+          {error?.field == "name" && (
+            <InfoMessage message={error.message} variant="error" />
           )}
         </div>
-        {error.unknown && (
-          <InfoMessage message={error.unknown} variant="error" />
-        )}
 
         <Button type="submit" className="w-full" disabled={isLoading}>
           {isLoading ? (

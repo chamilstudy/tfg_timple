@@ -17,6 +17,7 @@
     --muted-foreground: 0 0% 100%;
     --input: 0 0% 100%;
     --input-foreground: 0 0% 0%;
+    --pressed: 0 0% 92%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 0%;
     --border: 0 0% 82%;
@@ -36,6 +37,7 @@
     --muted-foreground: 0 0% 100%;
     --input: 0 0% 100%;
     --input-foreground: 0 0% 0%;
+    --pressed: 0 0% 92%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 0%;
     --border: 0 0% 82%;
@@ -47,6 +49,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -59,12 +62,28 @@
     @apply font-bold uppercase text-lg sm:text-xl;
   }
 
+  h3 {
+    @apply font-bold text-sm;
+  }
+
   .link {
-    @apply font-bold text-primary hover:text-primary transition-colors ease-in-out;
+    @apply font-bold text-primary transition-colors rounded hover:underline focus:underline outline-none cursor-pointer ease-in-out;
+  }
+
+  .pressed {
+    @apply hover:bg-pressed focus:bg-pressed group-focus:bg-pressed group-focus:ring-1 group-focus:ring-primary p-1 outline-none rounded transition-colors cursor-pointer ease-in-out;
   }
 
   .subheader {
     @apply text-xs sm:text-sm;
+  }
+
+  .info {
+    @apply text-xs;
+  }
+
+  .loading-text {
+    @apply bg-muted h-[1rem] w-full rounded animate-pulse;
   }
 
   .custom-focus-ring {

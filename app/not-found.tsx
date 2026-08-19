@@ -1,6 +1,6 @@
-import { Header } from "@/components/ui/header";
-import { Footer } from "@/components/ui/footer";
-import HeroTitle from "@/components/ui/titles/hero-title";
+import Header from "@/components/ui/layout/header";
+import Footer from "@/components/ui/layout/footer";
+import HeroTitle from "@/components/ui/layout/hero-title";
 
 export default function NotFound() {
   return (

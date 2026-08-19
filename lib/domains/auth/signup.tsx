@@ -1,12 +1,20 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import { checkUserNameAvailable } from "@/lib/actions/check-username-available";
-import { checkUserNameFormat } from "@/lib/actions/check-username-format";
-import { checkEmailFormat } from "@/lib/actions/check-email-format";
-import { checkPasswordFormat } from "@/lib/actions/check-password-format";
-import { AuthErrorCode } from "@/lib/errors/auth-errors";
-import { toSignUpDTO } from "@/lib/mappers/auth/signup.mapper";
+
+// Validators
+import checkUserNameAvailable from "@/lib/actions/validators/auth/check-username-available";
+import checkUserNameFormat from "@/lib/actions/validators/auth/check-username-format";
+import checkEmailFormat from "@/lib/actions/validators/auth/check-email-format";
+import checkPasswordFormat from "@/lib/actions/validators/auth/check-password-format";
+
+// DTOs
+import DomainResponseDTO from "@/lib/dto/domain-response/domain-response.dto";
+
+// Validators
+import toSignUpDTO from "@/lib/mappers/auth/signup.mapper";
+import toDomainResponseDTO from "@/lib/mappers/domain-response/domain-response.mapper";
+import toErrorDto from "@/lib/mappers/error/error.mapper";
 
 type SignUpArgs = {
   userName: string;
@@ -14,43 +22,54 @@ type SignUpArgs = {
   password: string;
 };
 
-type SignUpResult = { success: true } | { error: AuthErrorCode };
-
-export async function signUpAction({
+export default async function signUpAction({
   userName,
   email,
   password,
-}: SignUpArgs): Promise<SignUpResult> {
+}: SignUpArgs): Promise<DomainResponseDTO> {
   const supabase = await createClient();
 
   const userNameResult = await checkUserNameAvailable(userName);
-  if ("error" in userNameResult) {
-    return { error: userNameResult.error };
+  if (!userNameResult.success) {
+    return toDomainResponseDTO({ success: false, error: userNameResult.error });
   }
 
   const userNameFormatResult = checkUserNameFormat(userName);
-  if ("error" in userNameFormatResult) {
-    return { error: userNameFormatResult.error };
+  if (!userNameFormatResult.success) {
+    return toDomainResponseDTO({
+      success: false,
+      error: userNameFormatResult.error,
+    });
   }
 
   const emailFormatResult = checkEmailFormat(email);
-  if ("error" in emailFormatResult) return { error: emailFormatResult.error };
+  if (!emailFormatResult.success)
+    return toDomainResponseDTO({
+      success: false,
+      error: emailFormatResult.error,
+    });
 
   const passwordFormatResult = checkPasswordFormat(password);
-  if ("error" in passwordFormatResult)
-    return { error: passwordFormatResult.error };
+  if (!passwordFormatResult.success)
+    return toDomainResponseDTO({
+      success: false,
+      error: passwordFormatResult.error,
+    });
 
-  const data = toSignUpDTO({
+  const signUpData = toSignUpDTO({
     email,
     password,
     options: { data: { userName } },
   });
 
-  const { error } = await supabase.auth.signUp(data);
+  const { error: signUpError } = await supabase.auth.signUp(signUpData);
 
-  if (error) {
-    return { error: AuthErrorCode.INVALID_CREDENTIALS };
+  if (signUpError) {
+    return toDomainResponseDTO({
+      success: false,
+      error: toErrorDto("session", "UNKNOWN"),
+    });
   }
 
-  return { success: true };
+  return toDomainResponseDTO({});
 }

@@ -4,8 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 // Definir propiedades de Input, incluyendo las variantes
 interface InputProps
-  extends React.ComponentProps<"input">,
-    VariantProps<typeof inputVariants> {
+  extends React.ComponentProps<"input">, VariantProps<typeof inputVariants> {
   icon?: React.ReactNode;
   count?: number;
 }
@@ -23,19 +22,21 @@ const inputVariants = cva(
     defaultVariants: {
       variant: "default",
     },
-  }
+  },
 );
 
 // Componente Input
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, variant, type, icon, count, ...props }, ref) => {
+  ({ className, variant, type, icon, count, disabled, ...props }, ref) => {
     const inputRef = React.useRef<HTMLInputElement>(null);
 
     // Exponer el ref del input
     React.useImperativeHandle(ref, () => inputRef.current!);
 
     const handleContainerClick = () => {
-      inputRef.current?.focus();
+      if (!disabled) {
+        inputRef.current?.focus();
+      }
     };
 
     return (
@@ -44,20 +45,23 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         className={cn(
           "group flex items-center rounded border bg-input gap-3 p-4 py-3 text-md shadow-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-text focus-within:ring-1 focus-within:ring-ring",
           inputVariants({ variant }),
-          className
+          disabled && "pointer-events-none opacity-50", // Asegura que el contenedor también respete el estado disabled
+          className,
         )}
+        {...props}
       >
         {icon && <span className="text-muted">{icon}</span>}
         <input
           type={type}
           className="bg-transparent outline-none placeholder-muted w-full"
           ref={inputRef}
+          disabled={disabled} // Asegurarse de pasar el estado disabled al input
           {...props}
         />
         {count != null && <span className="text-muted">{count}</span>}
       </div>
     );
-  }
+  },
 );
 
 // Definir displayName para React DevTools

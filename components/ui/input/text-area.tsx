@@ -4,7 +4,8 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 // Definir propiedades de Textarea, incluyendo variantes
 interface TextareaProps
-  extends React.ComponentProps<"textarea">,
+  extends
+    React.ComponentProps<"textarea">,
     VariantProps<typeof textareaVariants> {
   icon?: React.ReactNode;
   count?: number;
@@ -23,7 +24,7 @@ const textareaVariants = cva(
     defaultVariants: {
       variant: "default",
     },
-  }
+  },
 );
 
 // Componente Textarea
@@ -44,7 +45,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         className={cn(
           "flex flex-col gap-2 rounded p-3 shadow-sm cursor-text border focus-within:ring-1 focus-within:ring-ring text-foreground bg-surface",
           textareaVariants({ variant }),
-          className
+          className,
         )}
       >
         <div className="flex items-center gap-3 w-full">
@@ -60,7 +61,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         )}
       </div>
     );
-  }
+  },
 );
 
 Textarea.displayName = "Textarea";

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
-import { Header } from "@/components/ui/header";
-import { Footer } from "@/components/ui/footer";
-import HeroTitle from "@/components/ui/titles/hero-title";
-import Title from "@/components/ui/titles/title";
+import Header from "@/components/ui/layout/header";
+import Footer from "@/components/ui/layout/footer";
+import HeroTitle from "@/components/ui/layout/hero-title";
+import SectionTitle from "@/components/ui/layout/section-title";
 
 export const metadata: Metadata = {
   title: "Términos y Condiciones - Timple Tabs",
@@ -37,7 +37,7 @@ export default function TermsAndConditions() {
             </div>
 
             <div className="grid gap-3">
-              <Title title="1. Objeto" description="Uso del sitio" />
+              <SectionTitle title="1. Objeto" description="Uso del sitio" />
               <p>
                 Los presentes Términos y Condiciones regulan el acceso y uso del
                 sitio <strong>www.timpletabs.com</strong>, un proyecto personal
@@ -49,7 +49,7 @@ export default function TermsAndConditions() {
             </div>
 
             <div className="grid gap-3">
-              <Title
+              <SectionTitle
                 title="2. Registro y cuentas de usuario"
                 description="Información requerida"
               />
@@ -75,7 +75,7 @@ export default function TermsAndConditions() {
             </div>
 
             <div className="grid gap-3">
-              <Title
+              <SectionTitle
                 title="3. Datos personales"
                 description="Uso de la información"
               />
@@ -103,7 +103,10 @@ export default function TermsAndConditions() {
             </div>
 
             <div className="grid gap-3">
-              <Title title="4. Menores de edad" description="Acceso a la web" />
+              <SectionTitle
+                title="4. Menores de edad"
+                description="Acceso a la web"
+              />
               <p>
                 De conformidad con lo establecido en el Reglamento (UE) 2016/679
                 (RGPD) y la Ley Orgánica 3/2018, de Protección de Datos
@@ -120,7 +123,7 @@ export default function TermsAndConditions() {
             </div>
 
             <div className="grid gap-3">
-              <Title
+              <SectionTitle
                 title="5. Uso del servicio"
                 description="Condiciones de utilización"
               />
@@ -138,7 +141,7 @@ export default function TermsAndConditions() {
             </div>
 
             <div className="grid gap-3">
-              <Title
+              <SectionTitle
                 title="6. Seguridad y almacenamiento"
                 description="Protección de datos"
               />
@@ -153,7 +156,7 @@ export default function TermsAndConditions() {
             </div>
 
             <div className="grid gap-3">
-              <Title
+              <SectionTitle
                 title="7. Modificaciones"
                 description="Cambios en los términos"
               />
@@ -166,7 +169,7 @@ export default function TermsAndConditions() {
             </div>
 
             <div className="grid gap-3">
-              <Title
+              <SectionTitle
                 title="8. Contacto"
                 description="Información del responsable"
               />

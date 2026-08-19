@@ -1,5 +1,6 @@
-import { EditUserNameDialog } from "@/components/settings/edit-profile/dialogs/edit-username-dialog";
-import { EditUserDescriptionDialog } from "@/components/settings/edit-profile/dialogs/edit-userdescription-dialog";
+// Components
+import EditUserNameDialog from "@/components/ui/dialog/dialogs/edit-username-dialog";
+import EditUserDescriptionDialog from "@/components/ui/dialog/dialogs/edit-userdescription-dialog";
 
 type EditAccDialogsProps = {
   userName: string;

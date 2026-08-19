@@ -1,7 +1,14 @@
+// vitest
 import { describe, it, expect, vi } from "vitest";
+
+// supabase
 import { createClient } from "@/lib/supabase/server";
-import { fetchPublicProfileAction } from "@/lib/domains/public/fetch-public-profile";
-import { UserErrorCode } from "@/lib/errors/user-errors";
+
+// domains
+import fetchPublicProfileAction from "./fetch-public-profile";
+
+// errors
+import { errorMessages } from "@/lib/errors/error";
 
 vi.mock("@/lib/supabase/server", () => ({
   createClient: vi.fn(),
@@ -9,50 +16,58 @@ vi.mock("@/lib/supabase/server", () => ({
 
 function createSupabaseProfileMock({
   data = {
+    user_id: "1",
     user_name: "user",
     description: "Description example",
     created_at: new Date().toISOString(),
+    publications: [],
+    requests: [],
   },
   error = null,
 }: {
   data?: any | null;
   error?: any | null;
 } = {}) {
-  const single = vi.fn().mockResolvedValue({ data, error });
-  const eq = vi.fn(() => ({ single }));
-  const select = vi.fn(() => ({ eq }));
-  const from = vi.fn(() => ({ select }));
-
-  return { from };
+  return {
+    rpc: vi.fn().mockResolvedValue({
+      data,
+      error,
+    }),
+  };
 }
 
 describe("fetchPublicProfileAction", () => {
   it("user not found", async () => {
     (createClient as any).mockResolvedValue(
-      createSupabaseProfileMock({ data: null })
+      createSupabaseProfileMock({ data: null }),
     );
 
     const result = await fetchPublicProfileAction({ user_name: "user" });
 
-    expect(result.data).toBeUndefined();
-    expect(result.error).toBe(UserErrorCode.USER_NOT_FOUND);
+    expect(result.error.field).toBe("fetch");
+    expect(result.error.message).toBe("No se han encontrado resultados");
+    expect(result.error.message).toBe(errorMessages.fetch.NOT_FOUND);
   });
 
   it("supabase error", async () => {
     (createClient as any).mockResolvedValue(
-      createSupabaseProfileMock({ error: new Error("DB Error") })
+      createSupabaseProfileMock({ error: new Error("DB Error") }),
     );
 
     const result = await fetchPublicProfileAction({ user_name: "user" });
-    expect(result.data).toBeUndefined();
-    expect(result.error).toBe(UserErrorCode.UNKNOWN);
+
+    expect(result.error.field).toBe("fetch");
+    expect(result.error.message).toBe("Error desconocido");
+    expect(result.error.message).toBe(errorMessages.fetch.UNKNOWN);
   });
 
   it("success", async () => {
-    (createClient as any).mockResolvedValue(createSupabaseProfileMock({}));
+    (createClient as any).mockResolvedValue(
+      createSupabaseProfileMock({ error: null }),
+    );
 
     const result = await fetchPublicProfileAction({ user_name: "user" });
-    expect(result.error).toBeUndefined();
+
     expect(result.data.user_name).toBe("user");
   });
 });

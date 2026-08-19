@@ -1,7 +1,8 @@
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-import { InfoMessage } from "../input/info-message";
+// Components
+import InfoMessage from "../info/info-message";
 import { ChevronRight } from "lucide-react";
 
 type Option = {
@@ -41,9 +42,7 @@ export default function SettingsMenu({
           tabIndex={isLoading ? -1 : 0}
           className={cn(
             "flex items-center justify-between py-3 px-6",
-            isLoading
-              ? "cursor-progress"
-              : "hover:bg-secondary hover:text-secondary-foreground cursor-pointer",
+            isLoading ? "cursor-progress" : "hover:bg-pressed  cursor-pointer",
           )}
           onClick={option.action}
         >

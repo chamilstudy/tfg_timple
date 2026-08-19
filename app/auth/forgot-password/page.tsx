@@ -1,6 +1,6 @@
-import { ForgotPasswordForm } from "@/components/auth/forgot-password-form";
-import { Header } from "@/components/ui/header";
-import { Footer } from "@/components/ui/footer";
+import ForgotPasswordForm from "@/components/auth/forgot-password-form";
+import Header from "@/components/ui/layout/header";
+import Footer from "@/components/ui/layout/footer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

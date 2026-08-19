@@ -25,17 +25,17 @@ export async function updateSession(request: NextRequest) {
         },
         setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value }) =>
-            request.cookies.set(name, value)
+            request.cookies.set(name, value),
           );
           supabaseResponse = NextResponse.next({
             request,
           });
           cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
+            supabaseResponse.cookies.set(name, value, options),
           );
         },
       },
-    }
+    },
   );
 
   // Do not run code between createServerClient and
@@ -47,6 +47,21 @@ export async function updateSession(request: NextRequest) {
   const { data } = await supabase.auth.getClaims();
   const user = data?.claims;
 
+  const pathname = request.nextUrl.pathname;
+
+  // Evitar loop infinito
+  if (pathname.startsWith("/user/") && !pathname.startsWith("/profile")) {
+    const profileUsername = pathname.split("/")[2];
+
+    const currentUsername = user?.user_metadata?.username;
+
+    if (user && currentUsername && profileUsername === currentUsername) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/profile";
+      return NextResponse.redirect(url);
+    }
+  }
+
   if (
     request.nextUrl.pathname !== "/" &&
     !user &&
@@ -56,7 +71,9 @@ export async function updateSession(request: NextRequest) {
     !request.nextUrl.pathname.startsWith("/faq") &&
     !request.nextUrl.pathname.startsWith("/legal-notice") &&
     !request.nextUrl.pathname.startsWith("/manual") &&
-    !request.nextUrl.pathname.startsWith("/user")
+    !request.nextUrl.pathname.startsWith("/user") &&
+    !request.nextUrl.pathname.startsWith("/publication") &&
+    !request.nextUrl.pathname.startsWith("/song-requests")
   ) {
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();

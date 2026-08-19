@@ -1,36 +1,42 @@
 "use server";
 
-import { PublicProfileDTO } from "@/lib/dto/user/public-profile.dto";
-import { toPublicProfileDTO } from "@/lib/mappers/user/public-profile.mapper";
 import { createClient } from "@/lib/supabase/server";
-import { UserErrorCode } from "@/lib/errors/user-errors";
 
-type FetchPublicProfileResult =
-  | { data: PublicProfileDTO }
-  | { error: UserErrorCode };
+// DTOs
+import DomainResponseDTO from "@/lib/dto/domain-response/domain-response.dto";
 
-export async function fetchPublicProfileAction(): Promise<FetchPublicProfileResult> {
+// Mappers
+import toPublicProfileDTO from "@/lib/mappers/user/public-profile.mapper";
+import toDomainResponseDTO from "@/lib/mappers/domain-response/domain-response.mapper";
+import toErrorDto from "@/lib/mappers/error/error.mapper";
+
+export default async function fetchPublicProfileAction(): Promise<DomainResponseDTO> {
   const supabase = await createClient();
 
   const userId = (await supabase.auth.getUser()).data.user?.id;
   if (!userId)
-    return {
-      error: UserErrorCode.INVALID_SESSION,
-    };
+    return toDomainResponseDTO({
+      success: false,
+      error: toErrorDto("session", "INVALID"),
+    });
 
-  const { data, error } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", userId)
-    .single();
+  const { data: fetchProfileInfoData, error: fetchProfileInfoError } =
+    await supabase.rpc("fetch_profile_info");
 
-  if (!data) {
-    return { error: UserErrorCode.USER_NOT_FOUND };
+  if (!fetchProfileInfoData) {
+    return toDomainResponseDTO({
+      success: false,
+      error: toErrorDto("fetch", "NOT_FOUND"),
+    });
   }
 
-  if (error) return { error: UserErrorCode.UNKNOWN };
+  if (fetchProfileInfoError)
+    return toDomainResponseDTO({
+      success: false,
+      error: toErrorDto("fetch", "UNKNOWN"),
+    });
 
-  if (!data.description) data.description = "Aún no tienes descripción...";
-
-  return { data: toPublicProfileDTO(data) };
+  return toDomainResponseDTO({
+    data: toPublicProfileDTO(fetchProfileInfoData),
+  });
 }

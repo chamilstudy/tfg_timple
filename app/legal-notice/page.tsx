@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 
-import { Header } from "@/components/ui/header";
-import { Footer } from "@/components/ui/footer";
-import HeroTitle from "@/components/ui/titles/hero-title";
-import Title from "@/components/ui/titles/title";
+import Header from "@/components/ui/layout/header";
+import Footer from "@/components/ui/layout/footer";
+import HeroTitle from "@/components/ui/layout/hero-title";
+import SectionTitle from "@/components/ui/layout/section-title";
+import Section from "@/components/ui/layout/section";
 
 export const metadata: Metadata = {
   title: "Aviso Legal - Timple Tabs",
@@ -20,19 +21,19 @@ export const metadata: Metadata = {
   },
 };
 
-export default function LegalNotice() {
+export default function LegalNoticePage() {
   return (
     <>
       <Header />
       <main className="flex flex-col items-center">
-        <div className="flex-1 flex flex-col gap-16 max-w-3xl p-6 py-16 w-full">
+        <Section className="flex gap-16 py-16">
           <HeroTitle
             title="Aviso Legal"
             description="Información legal sobre el uso del servicio"
           />
 
           <div className="grid gap-3">
-            <Title
+            <SectionTitle
               title="1. Información general"
               description="Datos identificativos del titular"
             />
@@ -58,7 +59,7 @@ export default function LegalNotice() {
           </div>
 
           <div className="grid gap-3">
-            <Title
+            <SectionTitle
               title="2. Objeto del sitio web"
               description="Finalidad del servicio"
             />
@@ -74,7 +75,7 @@ export default function LegalNotice() {
           </div>
 
           <div className="grid gap-3">
-            <Title
+            <SectionTitle
               title="3. Condiciones de uso"
               description="Responsabilidad del usuario"
             />
@@ -92,7 +93,7 @@ export default function LegalNotice() {
           </div>
 
           <div className="grid gap-3">
-            <Title
+            <SectionTitle
               title="4. Responsabilidad"
               description="Limitaciones del servicio"
             />
@@ -109,7 +110,7 @@ export default function LegalNotice() {
           </div>
 
           <div className="grid gap-3">
-            <Title
+            <SectionTitle
               title="5. Propiedad intelectual"
               description="Derechos sobre los contenidos"
             />
@@ -122,7 +123,10 @@ export default function LegalNotice() {
           </div>
 
           <div className="grid gap-3">
-            <Title title="6. Legislación aplicable" description="Marco legal" />
+            <SectionTitle
+              title="6. Legislación aplicable"
+              description="Marco legal"
+            />
             <p>
               El presente Aviso Legal se rige por la legislación española. Para
               la resolución de cualquier conflicto que pudiera derivarse del
@@ -130,7 +134,7 @@ export default function LegalNotice() {
               tribunales que correspondan conforme a derecho.
             </p>
           </div>
-        </div>
+        </Section>
       </main>
       <Footer />
     </>

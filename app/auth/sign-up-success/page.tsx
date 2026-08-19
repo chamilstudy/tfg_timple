@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { Metadata } from "next";
 
-import { Footer } from "@/components/ui/footer";
-import { Header } from "@/components/ui/header";
-import HeroTitle from "@/components/ui/titles/hero-title";
+import Footer from "@/components/ui/layout/footer";
+import Header from "@/components/ui/layout/header";
+import HeroTitle from "@/components/ui/layout/hero-title";
 import { Button } from "@/components/ui/input/button";
 
 export const metadata: Metadata = {

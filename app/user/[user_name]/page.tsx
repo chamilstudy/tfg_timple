@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 
-import { Header } from "@/components/ui/header";
-import { Footer } from "@/components/ui/footer";
+import Header from "@/components/ui/layout/header";
+import Footer from "@/components/ui/layout/footer";
 import PublicProfileInfo from "@/components/public-profile/public-profile-info";
+import { AuthProvider } from "@/contexts/auth.context";
 
 export var metadata: Metadata = {
   title: "Perfil - Timple Tabs",
@@ -42,13 +43,13 @@ export default async function PublicProfile({
   };
 
   return (
-    <>
+    <AuthProvider>
       <div className="flex min-h-svh w-full flex-col items-center justify-start">
         <Header />
         {<PublicProfileInfo user_name={user_name} />}
       </div>
 
       <Footer />
-    </>
+    </AuthProvider>
   );
 }

@@ -1,5 +1,5 @@
-import { PublicProfileDTO } from "@/lib/dto/user/public-profile.dto";
+import PublicProfileDTO from "@/lib/dto/user/public-profile.dto";
 
-export interface PrivateProfileDTO extends PublicProfileDTO {
+export default interface PrivateProfileDTO extends PublicProfileDTO {
   email: string;
 }

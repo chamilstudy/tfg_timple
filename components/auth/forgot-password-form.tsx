@@ -4,18 +4,22 @@ import Link from "next/link";
 import { useState } from "react";
 import { Mail, LoaderCircle } from "lucide-react";
 
+// Components
 import { Button } from "@/components/ui/input/button";
 import { Input } from "@/components/ui/input/input";
-import { Label } from "@/components/ui/input/label";
-import HeroTitle from "@/components/ui/titles/hero-title";
-import { InfoMessage } from "@/components/ui/input/info-message";
+import { Label } from "@/components/ui/info/label";
+import HeroTitle from "@/components/ui/layout/hero-title";
+import InfoMessage from "@/components/ui/info/info-message";
 
-import { AuthErrorFields, authErrorMap } from "@/lib/errors/auth-errors";
-import { requestPasswordAction } from "@/lib/domains/auth/request-password";
+// Server Functions
+import requestPasswordAction from "@/lib/domains/auth/request-password";
 
-export function ForgotPasswordForm() {
+// DTOs
+import { ErrorDTO } from "@/lib/dto/error/error.dto";
+
+export default function ForgotPasswordForm() {
   const [email, setEmail] = useState("");
-  const [error, setError] = useState<AuthErrorFields>({});
+  const [error, setError] = useState<ErrorDTO>();
   const [success, setSuccess] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -23,16 +27,19 @@ export function ForgotPasswordForm() {
   const handleForgotPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setError({});
+    setError(undefined);
 
     const redirectTo = `${window.location.origin}/auth/update-password`;
 
-    const result = await requestPasswordAction({ email, redirectTo });
+    const requestPasswordResponse = await requestPasswordAction({
+      email,
+      redirectTo,
+    });
 
-    if (result.error)
-      setError(authErrorMap[result.error] ?? { unknown: result.error });
-    else setSuccess(true);
+    if (!requestPasswordResponse.success)
+      setError(requestPasswordResponse.error);
 
+    setSuccess(requestPasswordResponse.success);
     setIsLoading(false);
   };
 
@@ -71,8 +78,8 @@ export function ForgotPasswordForm() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              {error.email && (
-                <InfoMessage message={error.email} variant={"error"} />
+              {error?.field == "email" && (
+                <InfoMessage message={error.message} variant={"error"} />
               )}
             </div>
 

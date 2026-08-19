@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
-import { Header } from "@/components/ui/header";
-import { Footer } from "@/components/ui/footer";
-import { SignUpForm } from "@/components/auth/sign-up-form";
+import Header from "@/components/ui/layout/header";
+import Footer from "@/components/ui/layout/footer";
+import SignUpForm from "@/components/auth/sign-up-form";
 
 export const metadata: Metadata = {
   title: "Registro - Timple Tabs",

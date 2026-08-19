@@ -5,7 +5,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-import { Section } from "@/components/manual/manual-data";
+import { Section } from "@/lib/actions/utils/manual-data.util";
 
 type ManualSideNavSectionProps = {
   section: Section;
@@ -35,20 +35,32 @@ export default function ManualSideNavSection({
       </div>
 
       {show &&
-        section.articles.map((article) => (
-          <Link
-            href={"/manual/" + section.slug + "/" + article.slug}
-            key={article.slug}
-            className={cn(
-              "text-sm w-full pl-3 border-l-4 border-background custom-focus-ring hover:text-primary",
-              currentArticle == article.slug
-                ? "text-primary border-solid border-l-4 border-primary"
-                : ""
-            )}
-          >
-            {article.title}
-          </Link>
-        ))}
+        section.articles.map((article) =>
+          currentArticle == article.slug ? (
+            <div
+              key={article.slug}
+              className="text-sm w-full text-primary flex flex-row items-center gap-2 font-bold"
+            >
+              <div className="w-1 bg-primary h-[1em] rounded-full"></div>
+              <p>{article.title}</p>
+            </div>
+          ) : (
+            <Link
+              href={"/manual/" + section.slug + "/" + article.slug}
+              key={article.slug}
+              className={cn(
+                "text-sm w-full ring-0 outline-none group",
+                currentArticle == article.slug
+                  ? "text-primary border-solid"
+                  : "",
+              )}
+            >
+              <span className="pressed link text-black font-normal hover:text-primary">
+                {article.title}
+              </span>
+            </Link>
+          ),
+        )}
     </div>
   );
 }

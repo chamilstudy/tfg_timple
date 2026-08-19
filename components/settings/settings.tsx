@@ -3,13 +3,14 @@
 import { useEffect, useState } from "react";
 import { notFound } from "next/navigation";
 
-import { EditProfileForm } from "@/components/settings/edit-profile/edit-profile";
-import { EditAccountForm } from "@/components/settings/edit-account/edit-account";
+// Components
+import EditProfileForm from "@/components/settings/edit-profile/edit-profile";
+import EditAccountForm from "@/components/settings/edit-account/edit-account";
 import ProfileLegal from "@/components/settings/profile-legal";
-import HeroTitle from "@/components/ui/titles/hero-title";
+import HeroTitle from "../ui/layout/hero-title";
 
-import { fetchPrivateProfileAction } from "@/lib/domains/user/fetch-private-profile";
-import { fetchPublicProfileAction } from "@/lib/domains/user/fetch-public-profile";
+import fetchPrivateProfileAction from "@/lib/domains/user/fetch-private-profile";
+import Section from "../ui/layout/section";
 
 export default function Settings() {
   const [isLoading, setIsLoading] = useState(true);
@@ -19,13 +20,13 @@ export default function Settings() {
 
   const fetchProfile = async () => {
     setIsLoading(true);
-    const result = await fetchPrivateProfileAction();
+    const fetchPrivateProfileResponse = await fetchPrivateProfileAction();
 
-    if ("error" in result) return notFound();
+    if (!fetchPrivateProfileResponse.success) return notFound();
 
-    setUserName(result.data.user_name);
-    setDescription(result.data.description);
-    setEmail(result.data.email);
+    setUserName(fetchPrivateProfileResponse.data.user_name);
+    setDescription(fetchPrivateProfileResponse.data.description);
+    setEmail(fetchPrivateProfileResponse.data.email);
 
     setIsLoading(false);
   };
@@ -35,7 +36,7 @@ export default function Settings() {
   }, []);
 
   return (
-    <>
+    <Section className="py-16 flex flex-col gap-10 items-center">
       <HeroTitle
         title="Ajustes"
         description="Ajustes de perfil y cuenta de usuario"
@@ -53,6 +54,6 @@ export default function Settings() {
         onProfileUpdate={fetchProfile}
       />
       <ProfileLegal />
-    </>
+    </Section>
   );
 }

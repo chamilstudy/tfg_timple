@@ -1,38 +1,50 @@
 "use server";
-import { PrivateProfileDTO } from "@/lib/dto/user/private-profile.dto";
+
 import { toPrivateProfileDTO } from "@/lib/mappers/user/private-profile.mapper";
 
 import { createClient } from "@/lib/supabase/server";
-import { UserErrorCode } from "@/lib/errors/user-errors";
-import { fetchPublicProfileAction } from "@/lib/domains/user/fetch-public-profile";
 
-type FetchPrivateProfileResult =
-  | {
-      data: PrivateProfileDTO;
-    }
-  | {
-      error: UserErrorCode;
-    };
+// Actions
+import fetchPublicProfileAction from "@/lib/domains/user/fetch-public-profile";
 
-export async function fetchPrivateProfileAction(): Promise<FetchPrivateProfileResult> {
+// DTOS
+import DomainResponseDTO from "@/lib/dto/domain-response/domain-response.dto";
+
+// Mappers
+import toDomainResponseDTO from "@/lib/mappers/domain-response/domain-response.mapper";
+import toErrorDto from "@/lib/mappers/error/error.mapper";
+
+export default async function fetchPrivateProfileAction(): Promise<DomainResponseDTO> {
   const supabase = await createClient();
 
-  const { data, error } = await supabase.auth.getSession();
+  const { data: userData, error: userError } = await supabase.auth.getSession();
 
-  if (error) {
-    return { error: UserErrorCode.UNKNOWN };
+  if (userError) {
+    return toDomainResponseDTO({
+      success: false,
+      error: toErrorDto("session", "UNKNOWN"),
+    });
   }
 
-  const emailFetched = data.session?.user.email;
-  if (!data || !emailFetched) {
-    return { error: UserErrorCode.INVALID_SESSION };
+  const emailFetched = userData?.session?.user.email;
+
+  if (!userData || !emailFetched) {
+    return toDomainResponseDTO({
+      success: false,
+      error: toErrorDto("session", "INVALID"),
+    });
   }
 
   const publicData = await fetchPublicProfileAction();
 
-  if ("error" in publicData) {
-    return { error: publicData.error as UserErrorCode };
+  if (!publicData.success) {
+    return toDomainResponseDTO({
+      success: false,
+      error: publicData.error,
+    });
   }
 
-  return { data: toPrivateProfileDTO(publicData.data, data.session?.user) };
+  return toDomainResponseDTO({
+    data: toPrivateProfileDTO(publicData.data, userData.session?.user),
+  });
 }

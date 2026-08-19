@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 
-import { Header } from "@/components/ui/header";
-import { Footer } from "@/components/ui/footer";
-import HeroTitle from "@/components/ui/titles/hero-title";
+import Header from "@/components/ui/layout/header";
+import Footer from "@/components/ui/layout/footer";
+import HeroTitle from "@/components/ui/layout/hero-title";
 import ManualSideNav from "@/components/manual/manual-side-nav";
 
-import { manualData } from "@/components/manual/manual-data";
+import { manualData } from "@/lib/actions/utils/manual-data.util";
+import Section from "@/components/ui/layout/section";
 
 export var metadata: Metadata = {
   title: "Manual del Usuario - Timple Tabs",
@@ -27,7 +28,7 @@ type ArticleProps = {
   article: string;
 };
 
-export default async function Article({
+export default async function ArticlePage({
   params,
 }: {
   params: Promise<ArticleProps>;
@@ -35,7 +36,7 @@ export default async function Article({
   function findArticle(sectionSlug: string, articleSlug: string) {
     const sectionData = manualData.find((s) => s.slug === sectionSlug);
     const articleData = sectionData?.articles.find(
-      (a) => a.slug === articleSlug
+      (a) => a.slug === articleSlug,
     );
     return { sectionData, articleData };
   }
@@ -70,13 +71,16 @@ export default async function Article({
         <div className="flex flex-col w-full justify-start sm:justify-center sm:flex-row flex-1">
           <ManualSideNav currentArticle={articleData.slug} />
 
-          <div className="max-w-2xl w-full py-16 gap-6 flex flex-col px-6">
+          <Section className="py-16 gap-6 flex flex-col">
             <HeroTitle
               title={articleData.title}
               description={articleData.description}
             />
-            <div className="flex flex-col gap-6">{articleData.children}</div>
-          </div>
+            <div className="flex flex-col gap-6 w-full">
+              {articleData.children}
+            </div>
+          </Section>
+
           <div className="max-w-xs w-full hidden xl:inline"></div>
         </div>
       </div>

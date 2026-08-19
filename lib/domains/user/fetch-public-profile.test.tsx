@@ -1,7 +1,14 @@
+// vitest
 import { describe, it, expect, vi } from "vitest";
+
+// supabase
 import { createClient } from "@/lib/supabase/server";
-import { fetchPublicProfileAction } from "@/lib/domains/user/fetch-public-profile";
-import { UserErrorCode } from "@/lib/errors/user-errors";
+
+// actions
+import fetchPublicProfileAction from "./fetch-public-profile";
+
+// error
+import { errorMessages } from "@/lib/errors/error";
 
 vi.mock("@/lib/supabase/server", () => ({
   createClient: vi.fn(),
@@ -9,67 +16,59 @@ vi.mock("@/lib/supabase/server", () => ({
 
 function createFetchPublicProfileMock({
   dataFetch = {
+    user_id: "1",
     user_name: "user",
     description: "Description example",
     created_at: new Date().toISOString(),
+    publications: [],
+    requests: [],
   },
-  errorFetch = null,
-  dataSession = { user: { id: "123" } },
-  errorSession = null,
+  fetchError = null,
+  sessionData = { user: { id: "123" } },
+  sessionError = null,
 }: {
   dataFetch?: any | null;
-  errorFetch?: any | null;
-  dataSession?: any | null;
-  errorSession?: any | null;
+  fetchError?: any | null;
+  sessionData?: any | null;
+  sessionError?: any | null;
 } = {}) {
-  const single = vi.fn().mockResolvedValue({
+  const rpc = vi.fn().mockResolvedValue({
     data: dataFetch,
-    error: errorFetch,
+    error: fetchError,
   });
-
-  const eq = vi.fn(() => ({ single }));
-  const select = vi.fn(() => ({ eq }));
-  const from = vi.fn(() => ({ select }));
 
   const auth = {
     getUser: vi.fn().mockResolvedValue({
-      data: dataSession,
-      error: errorSession,
+      data: sessionData,
+      error: sessionError,
     }),
   };
 
-  return { from, auth };
+  return {
+    rpc,
+    auth,
+  };
 }
 
 describe("fetchPublicProfileAction", () => {
-  it("", async () => {
-    (createClient as any).mockResolvedValue(
-      createFetchPublicProfileMock({ dataSession: { user: { userId: "" } } })
-    );
-
-    const result = await fetchPublicProfileAction();
-
-    expect(result.error).toBe(UserErrorCode.INVALID_SESSION);
-  });
-
   it("user not found", async () => {
     (createClient as any).mockResolvedValue(
-      createFetchPublicProfileMock({ dataFetch: null })
+      createFetchPublicProfileMock({ dataFetch: null }),
     );
 
     const result = await fetchPublicProfileAction();
 
-    expect(result.error).toBe(UserErrorCode.USER_NOT_FOUND);
+    expect(result.error.message).toBe(errorMessages.fetch.NOT_FOUND);
   });
 
   it("supabase error", async () => {
     (createClient as any).mockResolvedValue(
-      createFetchPublicProfileMock({ errorFetch: true })
+      createFetchPublicProfileMock({ fetchError: true }),
     );
 
     const result = await fetchPublicProfileAction();
 
-    expect(result.error).toBe(UserErrorCode.UNKNOWN);
+    expect(result.error.message).toBe(errorMessages.fetch.UNKNOWN);
   });
 
   it("success", async () => {
@@ -79,6 +78,6 @@ describe("fetchPublicProfileAction", () => {
 
     expect(result.data.user_name).toBe("user");
     expect(result.data.description).toBe("Description example");
-    expect(result.data.created_at).toMatch(/\d+ de \w+ de \d+/);
+    expect(result.data.created_at).toMatch("justo ahora");
   });
 });

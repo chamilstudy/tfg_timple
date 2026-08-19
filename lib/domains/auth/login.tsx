@@ -1,37 +1,47 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import { checkEmailFormat } from "@/lib/actions/check-email-format";
-import { checkPasswordFormat } from "@/lib/actions/check-password-format";
-import { AuthErrorCode } from "@/lib/errors/auth-errors";
-import { toLoginDTO } from "@/lib/mappers/auth/login.mapper";
+
+// Validators
+import checkEmailFormat from "@/lib/actions/validators/auth/check-email-format";
+import checkPasswordFormat from "@/lib/actions/validators/auth/check-password-format";
+
+// DTOs
+import DomainResponseDTO from "@/lib/dto/domain-response/domain-response.dto";
+
+// Mappers
+import toLoginDTO from "@/lib/mappers/auth/login.mapper";
+import toDomainResponseDTO from "@/lib/mappers/domain-response/domain-response.mapper";
+import toErrorDto from "@/lib/mappers/error/error.mapper";
 
 type LoginArgs = {
   email: string;
   password: string;
 };
 
-type LoginResult = { success: true } | { error: AuthErrorCode };
-
-export async function login({
+export default async function login({
   email,
   password,
-}: LoginArgs): Promise<LoginResult> {
+}: LoginArgs): Promise<DomainResponseDTO> {
   const supabase = await createClient();
 
   const emailResult = checkEmailFormat(email);
-  if ("error" in emailResult) return { error: emailResult.error };
+  if (!emailResult.success) return emailResult;
 
   const passwordResult = checkPasswordFormat(password);
-  if ("error" in passwordResult) return { error: passwordResult.error };
+  if (!passwordResult.success) return passwordResult;
 
-  const data = toLoginDTO({ email, password });
+  const loginData = toLoginDTO({ email, password });
 
-  const { error } = await supabase.auth.signInWithPassword(data);
+  const { error: signWithPasswordError } =
+    await supabase.auth.signInWithPassword(loginData);
 
-  if (error) {
-    return { error: AuthErrorCode.INVALID_CREDENTIALS };
+  if (signWithPasswordError) {
+    return toDomainResponseDTO({
+      success: false,
+      error: toErrorDto("session", "INVALID_CREDENTIALS"),
+    });
   }
 
-  return { success: true };
+  return toDomainResponseDTO({});
 }

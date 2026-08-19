@@ -1,6 +1,6 @@
 import { SignUpDTO } from "@/lib/dto/auth/signup.dto";
 
-export function toSignUpDTO(row: any): SignUpDTO {
+export default function toSignUpDTO(row: any): SignUpDTO {
   return {
     email: row.email,
     password: row.password,
