@@ -1,6 +1,5 @@
 import { transposeChord, parseChord } from "../music/musicTheory/chords";
 import { getContraChord, getTimpleChord } from "../music/chordAlg";
-import { text } from "stream/consumers";
 
 export function publicationBodyFormatter(
   publicationBody: string,
@@ -71,8 +70,6 @@ export function publicationBodyFormatter(
   return result;
 }
 
-type ChordMap = Record<string, Record<string, Record<string, number[]>>>;
-
 /**
  * Reemplaza índices en el body por nombres de acordes según el mapa de chords.
  * @param body Texto original (puede tener $1$, §1§, etc.)
@@ -93,25 +90,28 @@ function processBodyWithChords(
 ): string {
   if (!body || !chords) return body;
 
-  // Crear un mapa índice -> nombre del acorde
+  // Crear mapa índice -> nombre del acorde
   const chordFlatMap: Record<string, string> = {};
-  Object.entries(chords).forEach(([chordName, _positions], idx) => {
-    chordFlatMap[idx] = chordName; // clave = índice, valor = nombre del acorde
+
+  Object.entries(chords).forEach(([chordName], idx) => {
+    chordFlatMap[idx] = chordName;
   });
 
   let processed = body;
 
-  // Reemplaza $indice$ por nombre del acorde
-  processed = processed.replace(
-    /\$(\d+)\$/g,
-    (_, idx) => chordFlatMap[idx] || "",
-  );
+  // Reemplazar §indice§ manteniendo la posición original
+  processed = processed.replace(/§(\d+)§/g, (match, idx) => {
+    const chordName = chordFlatMap[idx] || "";
 
-  // Reemplaza §indice§ por nombre del acorde
-  processed = processed.replace(
-    /§(\d+)§/g,
-    (_, idx) => chordFlatMap[idx] || "",
-  );
+    // Mantener el ancho del marcador original
+    if (chordName.length <= match.length) {
+      return chordName.padEnd(match.length, " ");
+    }
+
+    // Si el acorde es más largo que el marcador,
+    // no podemos mantenerlo sin modificar la línea.
+    return chordName;
+  });
 
   // Limpiar cualquier § restante
   processed = processed.replace(/§/g, "");

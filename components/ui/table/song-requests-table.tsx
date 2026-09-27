@@ -148,7 +148,8 @@ export default function SongRequestsTable({
                       ],
                     },
 
-                    ...(session?.user.id !== request.requester_id
+                    ...(session?.user.id &&
+                    session?.user.id !== request.requester_id
                       ? [
                           {
                             actions: [

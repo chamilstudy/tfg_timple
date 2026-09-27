@@ -3,13 +3,6 @@ import { Label } from "../info/label";
 import { Button } from "./button";
 import { Car, Pause, Rabbit, Snail, X } from "lucide-react";
 
-const speedMap = [
-  0, // muy lento (px por frame)
-  0.5, // lento
-  1, // medio
-  2, // rápido
-];
-
 type ToggleAutoScrollProps = {
   disabled?: boolean;
 };
@@ -17,6 +10,8 @@ type ToggleAutoScrollProps = {
 export default function ToggleAutoscroll({ disabled }: ToggleAutoScrollProps) {
   const [speed, setSpeed] = useState(0); // 0 = pausado
   const animationRef = useRef<number | null>(null);
+
+  const speedMap = [0, 1, 2, 3];
 
   // función de scroll
   const scrollStep = () => {
@@ -45,7 +40,7 @@ export default function ToggleAutoscroll({ disabled }: ToggleAutoScrollProps) {
       <div className="flex flex-row flex-nowrap w-min text-sm shadow">
         <Button
           variant={speed == 0 ? "default" : "outline"}
-          className="flex-1 rounded-r-none w-full border-primary"
+          className="flex-1 rounded-r-none w-full border-r-0 border-primary"
           onClick={() => setSpeed(0)}
           disabled={disabled}
         >
@@ -53,7 +48,7 @@ export default function ToggleAutoscroll({ disabled }: ToggleAutoScrollProps) {
         </Button>
         <Button
           variant={speed == 1 ? "default" : "outline"}
-          className="flex-1 rounded-none border-l-0 w-full border-primary"
+          className="flex-1 rounded-none border-x-0 w-full border-primary"
           onClick={() => setSpeed(1)}
           disabled={disabled}
         >
@@ -61,7 +56,7 @@ export default function ToggleAutoscroll({ disabled }: ToggleAutoScrollProps) {
         </Button>
         <Button
           variant={speed == 2 ? "default" : "outline"}
-          className="flex-1 rounded-none border-l-0 w-full border-primary"
+          className="flex-1 rounded-none border-x-0 w-full border-primary"
           onClick={() => setSpeed(2)}
           disabled={disabled}
         >

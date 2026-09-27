@@ -4,8 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 import {
   ArrowUpRightFromSquare,
+  Edit,
   Flag,
   MoreHorizontal,
+  Trash,
   User,
 } from "lucide-react";
 
@@ -14,6 +16,7 @@ import TableToolbar from "./table-toolbar";
 import TableLayout from "./table-layout";
 import TableRowActions from "./table-row-actions";
 import ReportDialog from "../dialog/dialogs/report-dialog";
+import DeletePublicationDialog from "../dialog/dialogs/delete-publication-dialog";
 
 // DTOs
 import PublicationDTO from "@/lib/dto/publication/publication.dto";
@@ -79,6 +82,7 @@ export default function PublicationsTable({
           setShowDialog("");
         }}
       />
+
       <Section className="flex flex-col flex-nowrap gap-3 py-16">
         {/* Header */}
         <SectionTitle
@@ -137,6 +141,7 @@ export default function PublicationsTable({
                         },
                       ],
                     },
+
                     {
                       actions: [
                         {

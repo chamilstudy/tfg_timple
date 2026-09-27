@@ -59,7 +59,7 @@ export default function PublicationMain({
     },
   });
   const [instrument, setInstrument] = useState("timple");
-  const [notation, setNotation] = useState("c");
+  const [nomenclature, setNomenclature] = useState("c");
   const [createdAt, setCreatedAt] = useState("");
   const [transposition, setTransposition] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -118,13 +118,13 @@ export default function PublicationMain({
       });
     });
 
-    // Convertir los acordes según la notación
+    // Convertir los acordes según la nomenclatura
     const convertedChords: Record<string, number[]> = {};
 
     Object.entries(result).forEach(([chordName, frets]) => {
       const convertedChord = chordToString(
         parseChord(chordName),
-        notation == "c",
+        nomenclature == "c",
       ); // Convertir acorde a la notación deseada
 
       convertedChords[convertedChord] = frets;
@@ -132,11 +132,11 @@ export default function PublicationMain({
 
     // Establecer acordes procesados
     setChords(convertedChords);
-
+    console.log(rawBody);
     // Procesar rawBody: reemplazar $indice$ por acorde
     const processedBody = processBodyWithChords(rawBody, convertedChords);
     setBody(processedBody);
-  }, [rawChords, instrument, transposition, rawBody, notation]); // Dependencias actualizadas para incluir `notation`
+  }, [rawChords, instrument, transposition, rawBody, nomenclature]); // Dependencias actualizadas para incluir `notation`
 
   const transpositionMap: Record<number, string> = {
     1: "+1 pasos",
@@ -176,46 +176,50 @@ export default function PublicationMain({
             lastEdit={lastEdit}
             isLoading={isLoading}
             action={
-              session && !(session.user.id == userId) ? (
-                <>
-                  <Button
-                    asChild
-                    size="sm"
-                    variant="outline"
-                    aria-label="Navegar a ajustes"
-                    onClick={() => setShowDialog("report")}
-                  >
-                    <p>
-                      <Flag />
-                      <span>Reportar</span>
-                    </p>
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Link href={`/edit-publication/${publication_id}`}>
+              session ? (
+                !(session.user.id == userId) ? (
+                  <>
                     <Button
+                      asChild
                       size="sm"
                       variant="outline"
                       aria-label="Navegar a ajustes"
+                      onClick={() => setShowDialog("report")}
                     >
-                      <Edit />
-                      <span>Editar</span>
+                      <p>
+                        <Flag />
+                        <span>Reportar</span>
+                      </p>
                     </Button>
-                  </Link>
-                  <Button
-                    asChild
-                    size="sm"
-                    variant="destructive2"
-                    aria-label="Navegar a ajustes"
-                    onClick={() => setShowDialog("delete")}
-                  >
-                    <p>
-                      <Trash />
-                      <span>Eliminar</span>
-                    </p>
-                  </Button>
-                </>
+                  </>
+                ) : (
+                  <>
+                    <Link href={`/edit-publication/${publication_id}`}>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        aria-label="Navegar a ajustes"
+                      >
+                        <Edit />
+                        <span>Editar</span>
+                      </Button>
+                    </Link>
+                    <Button
+                      asChild
+                      size="sm"
+                      variant="destructive2"
+                      aria-label="Navegar a ajustes"
+                      onClick={() => setShowDialog("delete")}
+                    >
+                      <p>
+                        <Trash />
+                        <span>Eliminar</span>
+                      </p>
+                    </Button>
+                  </>
+                )
+              ) : (
+                <></>
               )
             }
           />
@@ -227,8 +231,8 @@ export default function PublicationMain({
           <PublicationSettings
             instrument={instrument}
             setInstrument={setInstrument}
-            notation={notation}
-            setNotation={setNotation}
+            nomenclature={nomenclature}
+            setNomenclature={setNomenclature}
             transposition={transposition}
             transpositionMap={transpositionMap}
             setTransposition={setTransposition}

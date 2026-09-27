@@ -12,6 +12,7 @@ import DomainResponseDTO from "@/lib/dto/domain-response/domain-response.dto";
 import toRequestPasswordDTO from "@/lib/mappers/auth/request-password.mapper";
 import toDomainResponseDTO from "@/lib/mappers/domain-response/domain-response.mapper";
 import toErrorDto from "@/lib/mappers/error/error.mapper";
+import { error } from "console";
 
 type RequestPaswordArgs = {
   email: string;

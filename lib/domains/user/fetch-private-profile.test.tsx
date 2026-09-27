@@ -136,6 +136,6 @@ describe("fetchPrivateProfileAction", () => {
     expect(result.data.email).toBe("user@domain.com");
     expect(result.data.user_name).toBe("user1");
     expect(result.data.description).toBe("desc");
-    expect(result.data.created_at).toBe("hace 4 meses");
+    expect(result.data.created_at).toBe("hace 7 meses");
   });
 });

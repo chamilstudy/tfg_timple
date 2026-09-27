@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
+import { cn } from "@/lib/utils";
+
 import ToggleAutoscroll from "../input/toggle-autoscroll";
 import ChordDiagram from "./chord-diagram";
-import { ArrowDownToDot, Minus, MoveDown, MoveUp, X } from "lucide-react";
-import { cn } from "@/lib/utils";
 import PublicationBodySkeleton from "./publication-body-skeleton";
+
+import { ArrowDownToDot, Minus, MoveDown, MoveUp, X } from "lucide-react";
 
 type PublicationBodyProps = {
   chords?: Record<string, Array<number>>;
@@ -50,19 +52,19 @@ export default function PublicationBody({
     return lines.map((line, i) => {
       const trimmed = line.trim();
 
-      // 1️⃣ Acordes
+      // Acordes
       if (chordRegex.test(trimmed)) {
         return (
           <div
             key={i}
-            className="font-bold text-primary font-mono whitespace-pre pt-3"
+            className="font-bold text-primary font-mono whitespace-pre pt-3 cursor-default"
           >
             {line.split(/(\s+)/).map((part, j) =>
               part.trim().length ? (
                 <span
                   key={j}
                   className={cn(
-                    "relative px-1 rounded hover:bg-pressed",
+                    "relative rounded hover:bg-pressed",
                     chords ? "cursor-pointer" : "",
                   )}
                   tabIndex={1}
@@ -79,7 +81,7 @@ export default function PublicationBody({
         );
       }
 
-      // 2️⃣ Rasgueo
+      // Rasgueo
       if (/^[DUTX\s\-]+$/.test(trimmed)) {
         return (
           <div key={i} className="flex pt-3">
@@ -105,7 +107,7 @@ export default function PublicationBody({
         );
       }
 
-      // 3️⃣ Texto normal
+      // 3Texto normal
       if (trimmed === "") {
         return (
           <div key={i} className="font-mono">

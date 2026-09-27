@@ -1,13 +1,12 @@
 // Components
-import Section from "@/components/ui/layout/section";
 import Select from "../../ui/input/select";
 import ToggleButton from "../../ui/input/toggle-button";
 
 type PublicationSettingsProps = {
   instrument: string;
   setInstrument: (instrument: string) => void;
-  notation: string;
-  setNotation: (notation: string) => void;
+  nomenclature: string;
+  setNomenclature: (nomenclature: string) => void;
   transposition: number;
   transpositionMap: Record<number, string>;
   setTransposition: (transposition: number) => void;
@@ -17,8 +16,8 @@ type PublicationSettingsProps = {
 export default function PublicationSettings({
   instrument,
   setInstrument,
-  notation,
-  setNotation,
+  nomenclature,
+  setNomenclature,
   transposition,
   transpositionMap,
   setTransposition,
@@ -36,11 +35,11 @@ export default function PublicationSettings({
         />
       </div>
       <div className="w-full flex-1 flex flex-col gap-1">
-        <h3>Notación</h3>
+        <h3>Nomenclatura</h3>
         <ToggleButton
           options={["c", "do"]}
-          currentOption={notation}
-          setCurrent={setNotation}
+          currentOption={nomenclature}
+          setCurrent={setNomenclature}
           disabled={isLoading}
         />
       </div>

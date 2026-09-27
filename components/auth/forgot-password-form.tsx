@@ -30,7 +30,6 @@ export default function ForgotPasswordForm() {
     setError(undefined);
 
     const redirectTo = `${window.location.origin}/auth/update-password`;
-
     const requestPasswordResponse = await requestPasswordAction({
       email,
       redirectTo,
@@ -69,6 +68,7 @@ export default function ForgotPasswordForm() {
                 Email
               </Label>
               <Input
+                variant={error && "error"}
                 id="email"
                 type="email"
                 autoComplete="email"
@@ -78,7 +78,7 @@ export default function ForgotPasswordForm() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              {error?.field == "email" && (
+              {error && (
                 <InfoMessage message={error.message} variant={"error"} />
               )}
             </div>
@@ -97,9 +97,9 @@ export default function ForgotPasswordForm() {
 
               <p className="text-center text-sm">¿no tienes cuenta?</p>
 
-              <Link href="/auth/login">
+              <Link href="/auth/sign-up">
                 <Button variant="outline" className="w-full">
-                  Iniciar Sesión
+                  Registrarse
                 </Button>
               </Link>
             </div>
