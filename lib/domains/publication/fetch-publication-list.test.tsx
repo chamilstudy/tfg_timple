@@ -90,17 +90,14 @@ describe("fetchPublicationListAction", () => {
 
     expect(result.data).toBeDefined();
 
-    expect(supabaseMock.rpc).toHaveBeenCalledWith(
-      "fetch_publication_list_new",
-      {
-        p_user_name: undefined,
-        p_search: undefined,
-        p_page: 1,
-        p_genre: undefined,
-        p_sort: "newest",
-        p_page_size: 10,
-        p_max_publications: null,
-      },
-    );
+    expect(supabaseMock.rpc).toHaveBeenCalledWith("fetch_publication_list", {
+      p_user_name: undefined,
+      p_search: undefined,
+      p_page: 1,
+      p_genre: undefined,
+      p_sort: "newest",
+      p_page_size: 10,
+      p_max_publications: null,
+    });
   });
 });

@@ -30,7 +30,7 @@ export default async function fetchPublicationListAction({
   const supabase = await createClient();
 
   const { data: fetchPublicationData, error: fetchPublicationError } =
-    await supabase.rpc("fetch_publication_list_new", {
+    await supabase.rpc("fetch_publication_list", {
       p_user_name: user_name,
       p_search: search, //
       p_page: page, //
