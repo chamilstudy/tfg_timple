@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
+
+// Utils
 import { genres } from "@/lib/actions/utils/genres.util";
+
+// Components
+import Select from "./select";
 
 type SelectGenresProps = {
   onSelect: (selection: Array<string>) => void;
@@ -9,71 +14,67 @@ type SelectGenresProps = {
 
 const EMPTY = "Seleccionar";
 
+// Convertir los géneros a Record<number, string>
+const genreOptions: Record<number, string> = Object.fromEntries(
+  genres.map((genre, index) => [index, genre]),
+);
+
 export default function SelectGenres({
   onSelect,
   selection,
   disabled = false,
 }: SelectGenresProps) {
-  const [selection1, setSelection1] = useState(selection[0] || EMPTY);
-  const [selection2, setSelection2] = useState(selection[1] || EMPTY);
+  const [selection1, setSelection1] = useState(
+    selection[0] ? genres.indexOf(selection[0]) : -1,
+  );
 
-  // 🔁 Sync con props
+  const [selection2, setSelection2] = useState(
+    selection[1] ? genres.indexOf(selection[1]) : -1,
+  );
+
+  // Sincronizar los estados con las props
   useEffect(() => {
-    setSelection1(selection[0] || EMPTY);
-    setSelection2(selection[1] || EMPTY);
+    setSelection1(selection[0] ? genres.indexOf(selection[0]) : -1);
+    setSelection2(selection[1] ? genres.indexOf(selection[1]) : -1);
   }, [selection]);
 
-  // 🔁 Emitir cambios
+  // Emitir los cambios
   useEffect(() => {
-    const result = [
-      selection1 !== EMPTY ? selection1 : "",
-      selection2 !== EMPTY ? selection2 : "",
-    ];
+    const selectedGenres = [selection1, selection2]
+      .filter((index) => index !== -1)
+      .map((index) => genres[index]);
 
-    const a = [];
-    if (selection1 !== EMPTY) a.push(selection1);
-    if (selection2 !== EMPTY) a.push(selection2);
+    onSelect(selectedGenres);
+  }, [selection1, selection2, onSelect]);
 
-    onSelect(a);
-  }, [selection1, selection2]);
+  // Evitar que ambos selectores tengan el mismo género
+  const availableFor1 = Object.fromEntries(
+    Object.entries(genreOptions).filter(([key]) => Number(key) !== selection2),
+  );
 
-  // 🚫 evitar duplicados dinámicamente
-  const availableFor1 = genres.filter((g) => g !== selection2);
-  const availableFor2 = genres.filter((g) => g !== selection1);
+  const availableFor2 = Object.fromEntries(
+    Object.entries(genreOptions).filter(([key]) => Number(key) !== selection1),
+  );
 
   return (
     <div className="grid grid-cols-2 gap-3 w-full">
-      {/* SELECT 1 */}
-      <select
-        value={selection1}
-        onChange={(e) => setSelection1(e.target.value)}
+      <Select
+        ariaLabel="Primer género"
+        placeholder={EMPTY}
+        options={availableFor1}
+        selection={selection1}
+        onSelect={setSelection1}
         disabled={disabled}
-        className="rounded p-3 border bg-white shadow-sm disabled:opacity-50"
-      >
-        <option value={EMPTY}>{EMPTY}</option>
+      />
 
-        {availableFor1.map((g) => (
-          <option key={g} value={g}>
-            {g}
-          </option>
-        ))}
-      </select>
-
-      {/* SELECT 2 */}
-      <select
-        value={selection2}
-        onChange={(e) => setSelection2(e.target.value)}
+      <Select
+        ariaLabel="Segundo género"
+        placeholder={EMPTY}
+        options={availableFor2}
+        selection={selection2}
+        onSelect={setSelection2}
         disabled={disabled}
-        className="rounded p-3 border bg-white shadow-sm disabled:opacity-50"
-      >
-        <option value={EMPTY}>{EMPTY}</option>
-
-        {availableFor2.map((g) => (
-          <option key={g} value={g}>
-            {g}
-          </option>
-        ))}
-      </select>
+      />
     </div>
   );
 }

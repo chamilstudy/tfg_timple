@@ -9,7 +9,7 @@ import DialogHero from "@/components/ui/dialog/dialog-hero";
 import { Button } from "@/components/ui/input/button";
 
 // Server Functions
-import deleteAccountAction from "@/lib/domains/user/manage-profile/delete-account";
+import deleteAccountAction from "@/lib/domains/profile/manage-profile/delete-account";
 
 // DTOs
 import { ErrorDTO } from "@/lib/dto/error/error.dto";

@@ -11,14 +11,18 @@ export default function songChordsValidator(
     Record<string, Record<string, Record<string, number[]>>>
   >,
 ): DomainResponseDTO {
-  if (Object.values(songChords["timple"]["0"]).length === 0) {
+  const timpleChords = songChords?.["timple"]?.["0"];
+
+  if (!timpleChords || Object.keys(timpleChords).length === 0) {
     return toDomainResponseDTO({
       success: false,
       error: toErrorDto("chords", "EMPTY"),
     });
   }
 
-  if (Object.values(songChords["timple"]["0"]["0"]).length === 0) {
+  const firstChordGroup = timpleChords["0"];
+
+  if (!firstChordGroup || Object.keys(firstChordGroup).length === 0) {
     return toDomainResponseDTO({
       success: false,
       error: toErrorDto("chords", "EMPTY"),

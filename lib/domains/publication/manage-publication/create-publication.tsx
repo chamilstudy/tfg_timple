@@ -43,7 +43,7 @@ export default async function createPublicationAction({
 
   const chordsFormatted = publicationBodyFormatter(body);
   const bodyFormatted = replaceChordLines(body);
-  
+
   const validationResult = validateFields([
     () => songNameValidator(songName),
     () => songAuthorValidator(author),

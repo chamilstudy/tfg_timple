@@ -13,12 +13,14 @@ import deleteSongRequestAction from "@/lib/domains/song-request/manage-song-requ
 
 // DTOs
 import { ErrorDTO } from "@/lib/dto/error/error.dto";
+import { useRouter } from "next/navigation";
 
 type DeleteSongRequestProps = {
   request_id: string;
   show: boolean;
   onClose: () => void;
   onSave: () => Promise<void>;
+  redirectTo?: string;
 };
 
 export default function DeleteSongRequestDialog({
@@ -26,11 +28,14 @@ export default function DeleteSongRequestDialog({
   show,
   onClose,
   onSave,
+  redirectTo,
 }: DeleteSongRequestProps) {
   const [page, setPage] = useState(0);
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<ErrorDTO>();
+
+  const router = useRouter();
 
   const handleDeletePublication = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,6 +56,14 @@ export default function DeleteSongRequestDialog({
     onClose();
     setPage(0);
     setError(undefined);
+  }
+
+  function handleEnd() {
+    handleClose();
+
+    if (redirectTo) {
+      router.push(redirectTo);
+    }
   }
 
   return (
@@ -104,7 +117,7 @@ export default function DeleteSongRequestDialog({
             title="¡Listo!"
             description="Se han enviado los correos de verificación"
           />
-          <Button onClick={handleClose}>Salir</Button>
+          <Button onClick={handleEnd}>Salir</Button>
         </>,
       ]}
     />

@@ -39,8 +39,8 @@ export default async function editPublicationAction({
     () => songBodyValidator(body),
   ]);
 
-  if (!validationResult) {
-    return validationResult;
+  if (validationResult.error) {
+    return toDomainResponseDTO(validationResult);
   }
 
   const { error: editPublicationError } = await supabase.rpc(

@@ -1,14 +1,13 @@
-import PrivateProfileDTO from "@/lib/dto/user/private-profile.dto";
-import PublicProfileDTO from "@/lib/dto/user/public-profile.dto";
-import toPublicProfileDTO from "./public-profile.mapper";
+import PrivateProfileDTO from "@/lib/dto/profile/private-profile.dto";
+import timeAgo from "@/lib/actions/formatters/time.formatter";
 
-export function toPrivateProfileDTO(
-  publicProfileData: any,
-  row: any,
-): PrivateProfileDTO {
-  const publicDTO: PublicProfileDTO = toPublicProfileDTO(publicProfileData);
+export function toPrivateProfileDTO(row: any): PrivateProfileDTO {
   return {
-    ...publicDTO,
+    user_id: row.profile_id,
+    user_name: row.user_name,
+    description: row.description || "Aún no tienes descripción...",
+    created_at_raw: row.created_at,
+    created_at: timeAgo(row.created_at),
     email: row.email,
   };
 }

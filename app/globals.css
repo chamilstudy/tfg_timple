@@ -66,12 +66,16 @@
     @apply font-bold text-sm;
   }
 
+  p {
+    @apply text-sm;
+  }
+
   .link {
     @apply font-bold text-primary transition-colors rounded hover:underline focus:underline outline-none cursor-pointer ease-in-out;
   }
 
   .pressed {
-    @apply hover:bg-pressed focus:bg-pressed group-focus:bg-pressed group-focus:ring-1 group-focus:ring-primary p-1 outline-none rounded transition-colors cursor-pointer ease-in-out;
+    @apply hover:bg-pressed focus:bg-pressed group-focus:bg-pressed group-focus:ring-1 group-focus:ring-primary outline-none rounded transition-colors cursor-pointer ease-in-out;
   }
 
   .subheader {

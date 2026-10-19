@@ -7,14 +7,24 @@ export default function Footer() {
       <div className="flex flex-col items-center max-w-lg w-full p-6 gap-16 py-16">
         <div className="flex flex-row flex-wrap justify-center w-full gap-10">
           <div className="flex flex-col items-start gap-3">
-            <p className="font-bold">Información Legal</p>
-            <Link href="/tac" aria-label="Navegar a términos y condiciones">
-              Términos y Condiciones
+            <p className="font-bold">TimpleTabs</p>
+            <Link href="/" aria-label="Navegar a la página principal">
+              Página Principal
             </Link>
-            <Link href="/legal-notice" aria-label="Navegar a aviso legal">
-              Aviso Legal
+            <Link
+              href="/publication-list"
+              aria-label="Navegar a la biblioteca de canciones"
+            >
+              Canciones
+            </Link>
+            <Link
+              href="/song-request-list"
+              aria-label="Navegar a la biblioteca de solicitudes"
+            >
+              Solicitudes
             </Link>
           </div>
+
           <div className="flex flex-col items-start gap-3">
             <p className="font-bold">Páginas de Ayuda</p>
             <Link href="/faq" aria-label="Navegar a preguntas frecuentes">
@@ -27,11 +37,19 @@ export default function Footer() {
               Manual del Usuario
             </Link>
           </div>
+          <div className="flex flex-col items-start gap-3">
+            <p className="font-bold">Información Legal</p>
+            <Link href="/tac" aria-label="Navegar a términos y condiciones">
+              Términos y Condiciones
+            </Link>
+            <Link href="/legal-notice" aria-label="Navegar a aviso legal">
+              Aviso Legal
+            </Link>
+          </div>
         </div>
 
         <div className="flex items-center gap-3">
           <p>© 2025 TimpleTabs</p>
-          <ThemeSwitcher />
         </div>
       </div>
     </footer>

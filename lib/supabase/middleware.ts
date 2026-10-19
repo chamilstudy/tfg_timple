@@ -48,18 +48,13 @@ export async function updateSession(request: NextRequest) {
   const user = data?.claims;
 
   const pathname = request.nextUrl.pathname;
+  const url = request.nextUrl.clone();
 
-  // Evitar loop infinito
-  if (pathname.startsWith("/user/") && !pathname.startsWith("/profile")) {
-    const profileUsername = pathname.split("/")[2];
-
+  if (pathname === "/profile" && url.searchParams.get("user_name") == null) {
     const currentUsername = user?.user_metadata?.username;
 
-    if (user && currentUsername && profileUsername === currentUsername) {
-      const url = request.nextUrl.clone();
-      url.pathname = "/profile";
-      return NextResponse.redirect(url);
-    }
+    url.searchParams.set("user_name", currentUsername);
+    return NextResponse.redirect(url);
   }
 
   if (
@@ -71,9 +66,9 @@ export async function updateSession(request: NextRequest) {
     !request.nextUrl.pathname.startsWith("/faq") &&
     !request.nextUrl.pathname.startsWith("/legal-notice") &&
     !request.nextUrl.pathname.startsWith("/manual") &&
-    !request.nextUrl.pathname.startsWith("/user") &&
+    !request.nextUrl.pathname.startsWith("/profile") &&
     !request.nextUrl.pathname.startsWith("/publication") &&
-    !request.nextUrl.pathname.startsWith("/song-requests")
+    !request.nextUrl.pathname.startsWith("/song-request-list")
   ) {
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();

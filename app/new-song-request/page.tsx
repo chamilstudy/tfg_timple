@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import Header from "@/components/ui/layout/header";
 import Footer from "@/components/ui/layout/footer";
 import SongRequestForm from "@/components/publication/song-request-form/song-request-form";
+import Section from "@/components/ui/layout/section";
+import GeneralInfoCards from "@/components/ui/info/general-info-cards";
 
 export const metadata: Metadata = {
   title: "Nueva Publicación - Timple Tabs",
@@ -25,7 +27,12 @@ export default function NewSong() {
       <div className="min-h-dvh w-full flex flex-col justify-between items-center">
         <Header />
         <SongRequestForm />
-        <div></div>
+        <Section
+          className="bg-gradient-to-b from-background to-primary p-5 pt-32 grid grid-flow-row sm:grid-flow-col items-center justify-center gap-8 w-full"
+          variant="full"
+        >
+          <GeneralInfoCards />
+        </Section>
       </div>
 
       <Footer />

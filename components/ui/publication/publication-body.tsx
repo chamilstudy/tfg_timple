@@ -7,6 +7,7 @@ import ChordDiagram from "./chord-diagram";
 import PublicationBodySkeleton from "./publication-body-skeleton";
 
 import { ArrowDownToDot, Minus, MoveDown, MoveUp, X } from "lucide-react";
+import { Button } from "../input/button";
 
 type PublicationBodyProps = {
   chords?: Record<string, Array<number>>;
@@ -135,7 +136,7 @@ export default function PublicationBody({
   return isLoading ? (
     <PublicationBodySkeleton />
   ) : (
-    <div className="flex flex-col gap-8 relative h-full w-full">
+    <div className="flex flex-col gap-8 relative h-full w-full ">
       {autoscroll && <ToggleAutoscroll />}
 
       {/* scroll container */}

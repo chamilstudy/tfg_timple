@@ -165,8 +165,6 @@ export function getPitchClassByRootNoteAndQuality(
     pitchClass[note] = weight;
   }
 
-  console.log(pitchClass);
-
   return pitchClass;
 }
 

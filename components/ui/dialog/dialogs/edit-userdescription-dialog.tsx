@@ -13,7 +13,7 @@ import CancelButton from "@/components/ui/buttons/cancel-button";
 import InfoMessage from "@/components/ui/info/info-message";
 
 // Server Functions
-import updateDescriptionAction from "@/lib/domains/user/manage-profile/update-description";
+import updateDescriptionAction from "@/lib/domains/profile/manage-profile/update-description";
 
 // DTOs
 import { ErrorDTO } from "@/lib/dto/error/error.dto";

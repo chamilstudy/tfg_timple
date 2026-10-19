@@ -1,3 +1,4 @@
+// Next
 import { cn } from "@/lib/utils";
 
 type SectionTitleProps = {

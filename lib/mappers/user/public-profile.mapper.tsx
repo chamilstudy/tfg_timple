@@ -2,11 +2,11 @@
 import timeAgo from "@/lib/actions/formatters/time.formatter";
 
 // DTOs
-import PublicProfileDTO from "@/lib/dto/user/public-profile.dto";
+import PublicProfileDTO from "@/lib/dto/profile/public-profile.dto";
 
 // Validators
-import toPublicationDTO from "../publication/publication.mapper";
-import toSongRequestDTO from "../song-request/song-request.mapper";
+import toPublicationListDTO from "../publication/publication-list.mapper";
+import toSongRequestListDTO from "../song-request/song-request-list.mapper";
 
 export default function toPublicProfileDTO(row: any): PublicProfileDTO {
   return {
@@ -15,11 +15,5 @@ export default function toPublicProfileDTO(row: any): PublicProfileDTO {
     description: row.description || "Aún no tienes descripción...",
     created_at_raw: row.created_at,
     created_at: timeAgo(row.created_at),
-    publications: row.publications.map((publication: any) => {
-      return toPublicationDTO(publication);
-    }),
-    requests: row.requests.map((request: any) => {
-      return toSongRequestDTO(request);
-    }),
   };
 }

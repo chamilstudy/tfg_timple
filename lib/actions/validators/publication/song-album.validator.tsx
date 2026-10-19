@@ -8,7 +8,13 @@ import toErrorDto from "@/lib/mappers/error/error.mapper";
 export default function songAlbumValidator(
   songAlbum: string,
 ): DomainResponseDTO {
-  if (songAlbum.length > 1 && songAlbum.length < 3) {
+  if (songAlbum.length == 0) {
+    return toDomainResponseDTO({
+      success: true,
+    });
+  }
+
+  if (songAlbum.length < 3) {
     return toDomainResponseDTO({
       success: false,
       error: toErrorDto("album", "TOO_SHORT"),

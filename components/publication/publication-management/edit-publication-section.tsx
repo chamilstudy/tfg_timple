@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { notFound } from "next/navigation";
+import { notFound, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 
 // Components
@@ -14,13 +14,10 @@ import editPublicationAction from "@/lib/domains/publication/manage-publication/
 import { processBodyWithChords } from "@/lib/actions/formatters/publication-body.formatter";
 import Section from "@/components/ui/layout/section";
 
-type EditPublicationSectionProps = {
-  publication_id: string;
-};
+export default function EditPublicationSection() {
+  const searchParams = useSearchParams();
+  const publicationIdParam = searchParams.get("publication-id") ?? "";
 
-export default function EditPublicationSection({
-  publication_id,
-}: EditPublicationSectionProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [publicationId, setPublicationId] = useState("");
   const [songName, setSongName] = useState("");
@@ -38,7 +35,10 @@ export default function EditPublicationSection({
     e.preventDefault();
     setIsLoading(true);
 
-    const result = await editPublicationAction({ body, publication_id });
+    const result = await editPublicationAction({
+      body: body,
+      publication_id: publicationId,
+    });
 
     router.push(`/profile`);
     setIsLoading(false);
@@ -47,7 +47,7 @@ export default function EditPublicationSection({
   const fetchPublicPublication = async () => {
     setIsLoading(true);
     const result = await fetchPublicationByIdAction({
-      publication_id: decodeURIComponent(publication_id),
+      publication_id: publicationIdParam,
     });
 
     if (!result.success) {
@@ -65,8 +65,10 @@ export default function EditPublicationSection({
   };
 
   useEffect(() => {
+    if (publicationIdParam == "") notFound();
+
     fetchPublicPublication();
-  }, []);
+  }, [publicationIdParam]);
 
   useEffect(() => {
     if (!rawChords) {

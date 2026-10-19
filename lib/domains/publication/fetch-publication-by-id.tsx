@@ -23,16 +23,16 @@ export default async function fetchPublicationByIdAction({
       p_publication_id: publication_id,
     });
 
-  if (!fetchPublicationData)
-    return toDomainResponseDTO({
-      success: false,
-      error: toErrorDto("fetch", "FAILED"),
-    });
-
   if (fetchPublicationError)
     return toDomainResponseDTO({
       success: false,
       error: toErrorDto("fetch", "UNKNOWN"),
+    });
+
+  if (!fetchPublicationData)
+    return toDomainResponseDTO({
+      success: false,
+      error: toErrorDto("fetch", "FAILED"),
     });
 
   return toDomainResponseDTO({

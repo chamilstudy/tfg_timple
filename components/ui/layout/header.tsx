@@ -34,27 +34,22 @@ export default function Header({ className, variant }: HeaderProps) {
   return (
     <header className={cn(headerVariants({ variant }), className)}>
       <div className="w-full max-w-5xl flex justify-between items-center">
-        <div className="flex flex-row flex-nowrap text-sm items-center gap-6">
-          {variant == "negative" ? (
-            <Link href={"/"} aria-label="Navegar a página principal">
-              <Image
-                src={LogoNegative}
-                alt="Logo Timple Tabs"
-                height={80}
-                width={80}
-              />
-            </Link>
-          ) : (
-            <Link href={"/"} aria-label="Navegar a página principal">
-              <Image src={Logo} alt="Logo Timple Tabs" height={80} width={80} />
-            </Link>
-          )}
+        <div className="flex flex-row flex-nowrap text-sm items-center gap-3 pr-3">
+          <Link href={"/"} aria-label="Navegar a página principal">
+            <Image src={Logo} alt="Logo Timple Tabs" height={80} width={80} />
+          </Link>
+
           <Link
-            href={"/song-requests"}
-            className={`link pressed text-xs ${variant == "negative" ? "text-white" : ""}`}
-            aria-label="Navegar a página de solicitudes"
+            href={"/song-request-list"}
+            className={`link pressed p-1 text-xs ${variant == "negative" ? "text-white" : ""}`}
           >
             Solicitudes
+          </Link>
+          <Link
+            href={"/publication-list"}
+            className={`link pressed p-1 text-xs ${variant == "negative" ? "text-white" : ""}`}
+          >
+            Canciones
           </Link>
         </div>
 

@@ -1,10 +1,12 @@
 "use client";
 
+// next
 import { useState, useEffect } from "react";
-import { notFound } from "next/navigation";
+import { notFound, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { Metadata } from "next";
 
-// Components
+// components
 import { Button } from "@/components/ui/input/button";
 import PublicationHero from "./publication-hero";
 import PublicationSettings from "./publication-settings";
@@ -12,9 +14,9 @@ import PublicationChords from "./publication-chords";
 import PublicationBodyNew from "@/components/ui/publication/publication-body";
 import Section from "@/components/ui/layout/section";
 import { Edit, Flag, Trash } from "lucide-react";
-import PublicationDialogs from "./publication-dialogs";
+import PublicationDialogs from "../../dialogs/publication-dialogs";
 
-// Server Functions
+// server functions
 import fetchPublicationByIdAction from "@/lib/domains/publication/fetch-publication-by-id";
 import { processBodyWithChords } from "@/lib/actions/formatters/publication-body.formatter";
 import {
@@ -22,24 +24,17 @@ import {
   parseChord,
 } from "@/lib/actions/music/musicTheory/chords";
 
-// Contexts
+// context
 import { useAuth } from "@/contexts/auth.context";
+import toPublicationDTO from "@/lib/mappers/publication/publication.mapper";
 
-type PublicPublicationInfoProps = {
-  publication_id: string;
-};
+export default function PublicationMain() {
+  const searchParams = useSearchParams();
+  const publicationId = searchParams.get("publication-id") ?? "";
 
-export default function PublicationMain({
-  publication_id,
-}: PublicPublicationInfoProps) {
-  const [userId, setUserId] = useState("");
-  const [userName, setUserName] = useState("");
-  const [songName, setSongName] = useState("");
-  const [author, setAuthor] = useState("");
-  const [genres, setGenres] = useState<string[]>([]);
-  const [lastEdit, setLastEdit] = useState("");
-  const [body, setBody] = useState(""); // body ya procesado
-  const [rawBody, setRawBody] = useState(""); // body original con $indice$
+  const [publicationInfo, setPublicationInfo] = useState(toPublicationDTO({}));
+  const [body, setBody] = useState("");
+  const [rawBody, setRawBody] = useState("");
   const [chords, setChords] = useState<Record<string, Array<number>>>({
     d: [],
     e: [],
@@ -60,7 +55,6 @@ export default function PublicationMain({
   });
   const [instrument, setInstrument] = useState("timple");
   const [nomenclature, setNomenclature] = useState("c");
-  const [createdAt, setCreatedAt] = useState("");
   const [transposition, setTransposition] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -71,7 +65,7 @@ export default function PublicationMain({
   const fetchPublicPublication = async () => {
     setIsLoading(true);
     const response = await fetchPublicationByIdAction({
-      publication_id: decodeURIComponent(publication_id),
+      publication_id: publicationId,
     });
 
     if (!response.success) {
@@ -79,21 +73,21 @@ export default function PublicationMain({
     }
 
     const data = response.data;
-    setUserId(data.user_id);
-    setUserName(data.user_name);
-    setSongName(data.song_name);
-    setAuthor(data.author);
-    setGenres(data.genres);
+    setPublicationInfo(data);
     setRawBody(data.body);
-    setCreatedAt(data.created_at);
-    setLastEdit(data.last_edit);
     setRawChords(data.chords);
+
+    document.title = `${data.song_name} | Timple Tabs`;
+
     setIsLoading(false);
   };
 
   useEffect(() => {
+    if (publicationId == "") {
+      notFound();
+    }
     fetchPublicPublication();
-  }, [publication_id]);
+  }, [publicationId]);
 
   useEffect(() => {
     if (!rawChords[instrument]) {
@@ -132,7 +126,7 @@ export default function PublicationMain({
 
     // Establecer acordes procesados
     setChords(convertedChords);
-    console.log(rawBody);
+
     // Procesar rawBody: reemplazar $indice$ por acorde
     const processedBody = processBodyWithChords(rawBody, convertedChords);
     setBody(processedBody);
@@ -157,106 +151,99 @@ export default function PublicationMain({
   return (
     <>
       <PublicationDialogs
-        publication_id={publication_id}
+        publication_id={publicationId}
         showDialog={showDialog}
         onClose={() => {
           setShowDialog("");
         }}
-        redirectTo={`/user/${userName}`}
+        redirectTo={`/profile?user_name=${publicationInfo?.user_name}`}
       />
 
-      <div className="flex flex-col gap-8 py-16 w-full items-center">
-        <Section>
-          <PublicationHero
-            userName={userName}
-            songName={songName}
-            author={author}
-            genres={genres}
-            createdAt={createdAt}
-            lastEdit={lastEdit}
-            isLoading={isLoading}
-            action={
-              session ? (
-                !(session.user.id == userId) ? (
-                  <>
-                    <Button
-                      asChild
-                      size="sm"
-                      variant="outline"
-                      aria-label="Navegar a ajustes"
-                      onClick={() => setShowDialog("report")}
-                    >
-                      <p>
-                        <Flag />
-                        <span>Reportar</span>
-                      </p>
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <Link href={`/edit-publication/${publication_id}`}>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        aria-label="Navegar a ajustes"
-                      >
-                        <Edit />
-                        <span>Editar</span>
-                      </Button>
-                    </Link>
-                    <Button
-                      asChild
-                      size="sm"
-                      variant="destructive2"
-                      aria-label="Navegar a ajustes"
-                      onClick={() => setShowDialog("delete")}
-                    >
-                      <p>
-                        <Trash />
-                        <span>Eliminar</span>
-                      </p>
-                    </Button>
-                  </>
-                )
+      <Section className="flex flex-col gap-8 w-full items-center">
+        <PublicationHero
+          publicationInfo={publicationInfo}
+          isLoading={isLoading}
+          action={
+            session ? (
+              !(session.user.id == publicationInfo?.user_id) ? (
+                <>
+                  <Button
+                    asChild
+                    size="sm"
+                    variant="outline"
+                    aria-label="Navegar a ajustes"
+                    onClick={() => setShowDialog("report")}
+                  >
+                    <p>
+                      <Flag />
+                      <span>Reportar</span>
+                    </p>
+                  </Button>
+                </>
               ) : (
-                <></>
+                <>
+                  <Button
+                    asChild
+                    size="sm"
+                    variant="outline"
+                    aria-label="Editar canción"
+                  >
+                    <Link
+                      href={`/edit-publication?publication-id=${publicationId}`}
+                    >
+                      <Edit />
+                      <span>Editar</span>
+                    </Link>
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="destructive2"
+                    aria-label="Eliminar canción"
+                    onClick={() => setShowDialog("delete")}
+                  >
+                    <Trash />
+                    <span>Eliminar</span>
+                  </Button>
+                </>
               )
-            }
-          />
-        </Section>
+            ) : (
+              <></>
+            )
+          }
+        />
+      </Section>
 
-        <hr className="w-full border-white" />
+      <hr className="w-full border-white" />
 
-        <Section>
-          <PublicationSettings
-            instrument={instrument}
-            setInstrument={setInstrument}
-            nomenclature={nomenclature}
-            setNomenclature={setNomenclature}
-            transposition={transposition}
-            transpositionMap={transpositionMap}
-            setTransposition={setTransposition}
-            isLoading={isLoading}
-          />
-        </Section>
+      <Section>
+        <PublicationSettings
+          instrument={instrument}
+          setInstrument={setInstrument}
+          nomenclature={nomenclature}
+          setNomenclature={setNomenclature}
+          transposition={transposition}
+          transpositionMap={transpositionMap}
+          setTransposition={setTransposition}
+          isLoading={isLoading}
+        />
+      </Section>
 
-        <hr className="w-full border-white" />
+      <hr className="w-full border-white" />
 
-        <Section>
-          <PublicationChords chords={chords} isLoading={isLoading} />
-        </Section>
+      <Section>
+        <PublicationChords chords={chords} isLoading={isLoading} />
+      </Section>
 
-        <hr className="w-full border-white" />
+      <hr className="w-full border-white" />
 
-        <Section>
-          <PublicationBodyNew
-            chords={chords}
-            body={body}
-            isLoading={isLoading}
-            autoscroll
-          />
-        </Section>
-      </div>
+      <Section>
+        <PublicationBodyNew
+          chords={chords}
+          body={body}
+          isLoading={isLoading}
+          autoscroll
+        />
+      </Section>
     </>
   );
 }

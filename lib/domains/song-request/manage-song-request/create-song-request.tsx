@@ -38,7 +38,7 @@ export default async function createSongRequestAction({
     () => songGenresValidator(genres),
   ]);
 
-  if (!validationResult) {
+  if (validationResult.error) {
     return validationResult;
   }
 

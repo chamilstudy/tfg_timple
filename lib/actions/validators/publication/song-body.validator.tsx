@@ -20,7 +20,7 @@ export default function songBodyValidator(songBody: string): DomainResponseDTO {
     });
   }
 
-  if (songBody.length > 5000) {
+  if (songBody.length > 10000) {
     return toDomainResponseDTO({
       success: false,
       error: toErrorDto("body", "TOO_LONG"),

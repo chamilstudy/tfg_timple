@@ -1,54 +1,45 @@
 import Section from "@/components/ui/layout/section";
 import TitleSkeleton from "@/components/ui/layout/title-skeleton";
+import PublicationDTO from "@/lib/dto/publication/publication.dto";
 import { cn } from "@/lib/utils";
 
 // Components
 import Link from "next/link";
 
 type PublicationHeroProps = {
-  userName: string;
-  songName: string;
-  author: string;
-  genres: Array<string>;
-  createdAt: string;
-  lastEdit: string;
   action?: React.ReactNode;
+  publicationInfo?: PublicationDTO;
   isLoading: boolean;
 };
 
 export default function PublicationHero({
-  userName,
-  songName,
-  author,
-  genres,
-  createdAt,
-  lastEdit,
   action,
+  publicationInfo,
   isLoading,
 }: PublicationHeroProps) {
   return isLoading ? (
     <TitleSkeleton />
   ) : (
-    <div className="flex flex-col flex-nowrap items-start gap-3 w-full pb-8">
+    <div className="flex flex-col flex-nowrap items-start gap-3 w-full ">
       <div className="flex flex-row flex-nowrap gap-2 w-full justify-between">
-        <h1>{songName}</h1>
+        <h1>{publicationInfo?.song_name}</h1>
       </div>
       <p className="uppercase">
-        por <span className="text-primary">{author}</span>
+        por <span className="text-primary">{publicationInfo?.author}</span>
       </p>
       <p className="text-xs">
         Publicado por{" "}
-        <Link href={`/user/${userName}`}>
-          <span className="link">@{userName}</span>{" "}
+        <Link href={`/profile?user_name=${publicationInfo?.user_name}`}>
+          <span className="link">@{publicationInfo?.user_name}</span>{" "}
         </Link>
-        <span>{createdAt}</span>{" "}
-        <span className={cn(createdAt == lastEdit ? "hidden" : "")}>
-          · Editado {lastEdit}
+        <span>{publicationInfo?.created_at}</span>{" "}
+        <span className={cn(!publicationInfo?.last_edit_raw ? "hidden" : "")}>
+          · Editado {publicationInfo?.last_edit}
         </span>
       </p>
 
       <div className="flex flex-row flex-nowrap gap-3 w-min select-none">
-        {genres.map((genre) => {
+        {publicationInfo?.genres.map((genre) => {
           return (
             <div
               key={genre + 1}

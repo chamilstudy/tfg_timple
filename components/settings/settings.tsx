@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { notFound } from "next/navigation";
 
 // Components
-import EditProfileForm from "@/components/settings/edit-profile/edit-profile";
-import EditAccountForm from "@/components/settings/edit-account/edit-account";
+import EditProfileForm from "@/components/settings/edit-profile";
+import EditAccountForm from "@/components/settings/edit-account";
 import ProfileLegal from "@/components/settings/profile-legal";
 import HeroTitle from "../ui/layout/hero-title";
 
-import fetchPrivateProfileAction from "@/lib/domains/user/fetch-private-profile";
+import fetchPrivateProfileAction from "@/lib/domains/profile/fetch-private-profile";
 import Section from "../ui/layout/section";
 
 export default function Settings() {

@@ -9,7 +9,7 @@ import DialogHero from "@/components/ui/dialog/dialog-hero";
 import { Button } from "@/components/ui/input/button";
 
 // Server Functions
-import signOutAction from "@/lib/domains/user/manage-profile/sign-out";
+import signOutAction from "@/lib/domains/profile/manage-profile/sign-out";
 
 // DTOs
 import { ErrorDTO } from "@/lib/dto/error/error.dto";

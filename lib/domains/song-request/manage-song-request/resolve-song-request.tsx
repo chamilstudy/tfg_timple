@@ -39,7 +39,7 @@ export default async function resolveSongRequestAction({
     () => songBodyValidator(body),
   ]);
 
-  if (!validationResult) {
+  if (validationResult.error) {
     return validationResult;
   }
 

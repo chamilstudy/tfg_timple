@@ -1,4 +1,6 @@
 export default function timeAgo(date: string | Date) {
+  if (!date) return "";
+
   const rtf = new Intl.RelativeTimeFormat("es", { numeric: "auto" });
   const now = new Date();
   const past = new Date(date);

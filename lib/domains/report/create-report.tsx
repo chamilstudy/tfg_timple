@@ -65,5 +65,5 @@ export default async function createReportAction({
     });
   }
 
-  return toDomainResponseDTO({});
+  return toDomainResponseDTO({ success: true });
 }

@@ -14,7 +14,9 @@ import CancelButton from "@/components/ui/buttons/cancel-button";
 import InfoMessage from "@/components/ui/info/info-message";
 
 // Server Functions
-import updateUserNameAction from "@/lib/domains/user/manage-profile/update-username";
+import updateUserNameAction from "@/lib/domains/profile/manage-profile/update-username";
+
+// dtos
 import { ErrorDTO } from "@/lib/dto/error/error.dto";
 
 type EditEmailDialogProps = {
