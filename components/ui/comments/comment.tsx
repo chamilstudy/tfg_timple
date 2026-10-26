@@ -44,7 +44,7 @@ export default function Comment({ commentData, onChange }: CommentProps) {
         commentId={currentCommentId}
       />
       <div className="flex flex-row flex-nowrap bg-surface rounded p-5 ">
-        <div className="w-full flex flex-col flex-nowrap gap-1">
+        <div className="w-full flex flex-col flex-nowrap">
           <p className="text-xs">
             <Link
               href={`profile?user-name?${commentData.user_name}`}

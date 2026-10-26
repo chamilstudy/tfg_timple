@@ -78,11 +78,13 @@ export default function CommentList() {
           <GeneralEmptyFetchCard message="¡Sé el primero en comentar!" />
         )}
       </div>
-      <PageNumber
-        scrollTo="comments"
-        startPage={1}
-        endPage={commentList.total_pages}
-      />
+      {commentList.total_pages > 1 && (
+        <PageNumber
+          scrollTo="comments"
+          startPage={1}
+          endPage={commentList.total_pages}
+        />
+      )}
     </div>
   );
 }

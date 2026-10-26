@@ -142,7 +142,7 @@ export default function ContextMenu({ actionGroups }: ContextMenuProps) {
         onClick={() => setOpen((previous) => !previous)}
         className="pressed rounded p-1 focus-visible:outline focus-visible:outline-2"
       >
-        <MoreVertical size={20} strokeWidth={1} />
+        <MoreVertical size={20} strokeWidth={1} fill="black" />
       </button>
 
       {open && (
