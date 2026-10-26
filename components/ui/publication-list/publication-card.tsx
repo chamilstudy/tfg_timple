@@ -8,7 +8,15 @@ import PublicationDTO from "@/lib/dto/publication/publication.dto";
 import ReportDialog from "../dialog/dialogs/report-dialog";
 import DeletePublicationDialog from "../dialog/dialogs/delete-publication-dialog";
 import ContextMenu from "../input/context-menu";
-import { ArrowRight, Flag, Pencil, Trash, User } from "lucide-react";
+import {
+  ArrowRight,
+  Flag,
+  MessageCircle,
+  Pencil,
+  ThumbsUp,
+  Trash,
+  User,
+} from "lucide-react";
 
 // Contexts
 import { useAuth } from "@/contexts/auth.context";
@@ -139,20 +147,31 @@ export default function PublicationCard({
             />
           }
         </div>
-
-        <p className="text-xs self-end">
-          <span>
-            Publicado por{" "}
-            <Link
-              className="link"
-              href={`/profile?user_name=${publicationData.user_name}`}
-              onClick={(e) => e.stopPropagation()}
-            >
-              @{publicationData.user_name}
-            </Link>{" "}
-            {publicationData.created_at}
-          </span>
-        </p>
+        <div className="flex flex-row flex-nowrap justify-between">
+          <div className="flex flex-row flex-nowtap gap-3 items-center">
+            <div className="flex flex-row flex-nowrap items-center gap-1 text-xs">
+              <ThumbsUp size="1em" />
+              <span>{publicationData.likes}</span>
+            </div>
+            <div className="flex flex-row flex-nowrap items-center gap-1 text-xs">
+              <MessageCircle size="1em" />
+              <span>{publicationData.comments}</span>
+            </div>
+          </div>
+          <p className="text-xs justify-between">
+            <span>
+              Publicado por{" "}
+              <Link
+                className="link"
+                href={`/profile?user_name=${publicationData.user_name}`}
+                onClick={(e) => e.stopPropagation()}
+              >
+                @{publicationData.user_name}
+              </Link>{" "}
+              {publicationData.created_at}
+            </span>
+          </p>
+        </div>
       </div>
     </>
   );

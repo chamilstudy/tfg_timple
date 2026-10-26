@@ -10,7 +10,7 @@ const selectVariants = cva(
         default: "bg-white",
       },
       size: {
-        default: "",
+        default: "text-md",
         sm: "text-xs",
       },
     },

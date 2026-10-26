@@ -43,7 +43,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       <div
         onClick={handleContainerClick}
         className={cn(
-          "flex flex-col gap-2 rounded p-3 shadow-sm cursor-text border focus-within:ring-1 focus-within:ring-ring text-foreground bg-surface",
+          "flex flex-col rounded p-3 shadow-sm cursor-text border focus-within:ring-1 focus-within:ring-ring text-foreground bg-surface",
           textareaVariants({ variant }),
           className,
         )}

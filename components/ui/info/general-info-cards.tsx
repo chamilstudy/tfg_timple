@@ -5,13 +5,18 @@ import InfoCard from "./info-card";
 import { Button } from "../input/button";
 
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
-export default function GeneralInfoCards() {
+type GeneralInfoCardsProps = {
+  className: string;
+};
+
+export default function GeneralInfoCards({ className }: GeneralInfoCardsProps) {
   const router = useRouter();
   return (
     <>
       <InfoCard
-        className="flex-1 max-w-none md:max-w-96 h-full w-full"
+        className={cn("flex-1 max-w-none md:max-w-96 h-full w-full", className)}
         icon={<MessageCircleQuestion />}
         title="¿Tienes alguna duda?"
         body="Puedes consultar nuestra página de preguntas frecuentes, donde encontrarás respuesta a varias de las cuestiones más comunes entre nuestros usuarios"
@@ -29,7 +34,7 @@ export default function GeneralInfoCards() {
         }
       />
       <InfoCard
-        className="flex-1 max-w-none md:max-w-96 h-full w-full"
+        className={cn("flex-1 max-w-none md:max-w-96 h-full w-full", className)}
         icon={<BookOpenText />}
         title="¿Necesitas más información?"
         body="Echa un vistazo a nuestro manual del usuario, donde podrás acceder a información detallada sobre como utilizar las distintas funcionalidades de este espacio"

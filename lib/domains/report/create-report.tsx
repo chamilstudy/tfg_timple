@@ -13,6 +13,7 @@ type CreateReportArgs = {
   reason: string;
   publication_id?: string;
   request_id?: string;
+  comment_id?: string;
   user_id?: string;
 };
 
@@ -21,6 +22,7 @@ export default async function createReportAction({
   publication_id,
   request_id,
   user_id,
+  comment_id,
 }: CreateReportArgs): Promise<DomainResponseDTO> {
   if (reason.length < 1) {
     return toDomainResponseDTO({
@@ -40,7 +42,9 @@ export default async function createReportAction({
     });
   }
 
-  const targets = [publication_id, request_id, user_id].filter(Boolean);
+  const targets = [publication_id, request_id, user_id, comment_id].filter(
+    Boolean,
+  );
 
   if (targets.length !== 1) {
     return toDomainResponseDTO({
@@ -55,6 +59,7 @@ export default async function createReportAction({
     status: false,
     publication_id: publication_id,
     request_id: request_id,
+    comment_id: comment_id,
     user_id: user_id,
   });
 

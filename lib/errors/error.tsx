@@ -11,7 +11,8 @@ export type ErrorField =
   | "unknown"
   | "fetch"
   | "session"
-  | "report";
+  | "report"
+  | "comment";
 
 export type ErrorType =
   | "EMPTY"
@@ -95,6 +96,12 @@ export const errorMessages: ErrorMessage = {
   fetch: {
     FAILED: "No se ha podido conectar con el servidor",
     NOT_FOUND: "No se han encontrado resultados",
+    UNKNOWN: "Error desconocido",
+  },
+  comment: {
+    EMPTY: "El comentario está vacío",
+    TOO_SHORT: "El comentario es demasiado corto",
+    TOO_LONG: "El comentario es demasiado largo",
     UNKNOWN: "Error desconocido",
   },
   unknown: {

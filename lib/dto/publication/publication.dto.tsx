@@ -4,4 +4,7 @@ export default interface PublicationDTO extends SongInfoDTO {
   publication_id: string;
   user_id: string;
   user_name: string;
+  likes: number;
+  is_liked: boolean;
+  comments: number;
 }

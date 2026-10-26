@@ -8,10 +8,11 @@ import { notFound, useSearchParams } from "next/navigation";
 import { TriangleAlert } from "lucide-react";
 
 // components
-import PageNumber from "./page-number";
+import PageNumber from "../input/page-number";
 import ListToolBar from "./list-tool-bar";
 import SongRequestCard from "./song-request-card";
 import PublicationListSkeleton from "./publication-list-skeleton";
+import GeneralEmptyFetchCard from "../info/general-empty-fetch-card";
 
 // dtos
 import SongRequestListDTO from "@/lib/dto/song-request/song-request-list.dto";
@@ -103,10 +104,7 @@ export default function SongRequestList({
                 />
               ))
             ) : (
-              <div className="flex flex-col flex-nowrap justify-center gap-2 items-center border border-border bg-background rounded p-16 ">
-                <TriangleAlert />
-                <span>No se han encontrado coincidencias</span>
-              </div>
+              <GeneralEmptyFetchCard />
             )}
           </div>
           {showPageNumber && songRequestListData.total_pages > 1 && (

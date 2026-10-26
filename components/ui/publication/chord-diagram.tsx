@@ -18,13 +18,13 @@ export default function ChordDiagram({
 
     if (fretIdx === 0) {
       if (fret === -1)
-        return <LucideX className="relative top-1 -left-3 w-3 h-2" />;
+        return <LucideX className="relative -top-1 -left-1.5 w-2.5 h-2.5" />;
       if (fret === 0) return <></>;
     }
 
     if (fret === fretIdx)
       return (
-        <div className="rounded-full h-3 w-3 bg-black relative top-1/4 -left-1/2"></div>
+        <div className="rounded-full h-2.5 w-2.5 bg-black relative top-0.5 -left-1.5 border border-black" />
       );
 
     return null;
@@ -52,8 +52,8 @@ export default function ChordDiagram({
       <div
         className="grid"
         style={{
-          gridTemplateRows: `repeat(${fretDepth}, 1.5rem)`, // alto de las filas reducido
-          gridTemplateColumns: `repeat(${strings}, 1rem)`, // ancho de columnas reducido
+          gridTemplateRows: `repeat(${fretDepth}, 1rem)`, // alto de las filas reducido
+          gridTemplateColumns: `repeat(${strings}, 0.8rem)`, // ancho de columnas reducido
         }}
       >
         {Array.from({ length: fretDepth }).map((_, fretIdx) =>

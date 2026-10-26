@@ -22,14 +22,14 @@ export default async function AuthButton() {
       >
         <Link href="/new-publication">
           <Plus />
-          <span className="hidden sm:inline">Crear</span>
+          <span className="responsive-hide-behaviour">Crear</span>
         </Link>
       </Button>
 
       <Button asChild size="sm" aria-label="Navegar a perfil del usuario">
         <Link href="/profile">
           <UserRound />
-          <span className="hidden sm:inline">Perfil</span>
+          <span className="responsive-hide-behaviour">Perfil</span>
         </Link>
       </Button>
     </div>

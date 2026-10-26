@@ -3,7 +3,6 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 // Media
 import Logo from "@/public/images/logo.svg";
-import LogoNegative from "@/public/images/logo_negative.svg";
 
 // Components
 import Link from "next/link";

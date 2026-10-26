@@ -8,9 +8,14 @@ import { useState } from "react";
 type PageNumberProps = {
   startPage: number;
   endPage: number;
+  scrollTo?: string;
 };
 
-export default function PageNumber({ startPage, endPage }: PageNumberProps) {
+export default function PageNumber({
+  startPage,
+  endPage,
+  scrollTo,
+}: PageNumberProps) {
   const pathname = usePathname();
   const params = useSearchParams();
   const currentPage = Number(params.get("page")) || 1;
@@ -18,7 +23,8 @@ export default function PageNumber({ startPage, endPage }: PageNumberProps) {
   const createPageUrl = (page: number) => {
     const setParams = new URLSearchParams(params.toString());
     setParams.set("page", page.toString());
-    return `${pathname}?${setParams.toString()}`;
+    //return `${pathname}?${setParams.toString()}${scrollTo ? `#${scrollTo}` : ``};
+    return `${pathname}${setParams.toString() ? `?${setParams.toString()}` : ""}${scrollTo ? `#${scrollTo}` : ""}`;
   };
   return (
     <div className="flex flex-row flex-nowrap gap-2 text-primary justify-center items-center">

@@ -18,9 +18,10 @@ import fetchPublicationListAction from "@/lib/domains/publication/fetch-publicat
 
 // components
 import PublicationCard from "./publication-card";
-import PageNumber from "./page-number";
+import PageNumber from "../input/page-number";
 import ListToolBar from "./list-tool-bar";
 import PublicationListSkeleton from "./publication-list-skeleton";
+import GeneralEmptyFetchCard from "../info/general-empty-fetch-card";
 
 type PublicationListProps = {
   showToolBar?: boolean;
@@ -105,10 +106,7 @@ export default function PublicationList({
                 />
               ))
             ) : (
-              <div className="flex flex-col flex-nowrap justify-center gap-2 items-center border border-border bg-background rounded p-16">
-                <TriangleAlert />
-                <span>No se han encontrado coincidencias</span>
-              </div>
+              <GeneralEmptyFetchCard />
             )}
           </div>
           {showPageNumber && publicationListData.total_pages > 1 && (

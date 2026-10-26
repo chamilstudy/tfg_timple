@@ -93,6 +93,10 @@
   .custom-focus-ring {
     @apply focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus:rounded;
   }
+
+  .responsive-hide-behaviour {
+    @apply hidden sm:inline;
+  }
 }
 
 /* globals.css */

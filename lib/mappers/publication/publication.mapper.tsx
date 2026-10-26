@@ -6,6 +6,9 @@ export default function toPublicationDTO(row: any): PublicationDTO {
     publication_id: row.publication_id,
     user_id: row.user_id,
     user_name: row.user_name,
+    likes: row.likes,
+    is_liked: row.is_liked,
+    comments: row.comments,
     ...toSongInfoDTO(row),
   };
 }

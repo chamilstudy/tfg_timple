@@ -26,19 +26,19 @@ export default async function Publication() {
   return (
     <AuthProvider>
       <div className="flex min-h-svh w-full flex-col items-center justify-start">
-        <Header />
+        <Header className="print:hidden" />
         <div className="flex flex-col gap-8 py-16 w-full items-center">
           <PublicationMain />
           <Section
-            className="bg-gradient-to-b from-background to-primary p-5 pt-32 grid grid-flow-row sm:grid-flow-col items-center justify-center gap-8 w-full"
+            className="bg-gradient-to-b from-background to-primary p-5 pt-32 grid grid-flow-row sm:grid-flow-col items-center justify-center gap-8 w-full "
             variant="full"
           >
-            <GeneralInfoCards />
+            <GeneralInfoCards className="print:hidden" />
           </Section>
         </div>
       </div>
 
-      <Footer />
+      <Footer className="print:hidden" />
     </AuthProvider>
   );
 }

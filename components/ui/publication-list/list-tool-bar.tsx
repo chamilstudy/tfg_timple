@@ -31,8 +31,13 @@ export default function ListToolBar({ isLoading }: ListToolBarProps) {
   const genre = params.get("genre");
 
   // order
-  const orderOptions = ["name", "newest", "oldest"];
-  const orderNames = ["Por nombre", "Más reciente", "Más antiguo"];
+  const orderOptions = ["name", "newest", "oldest", "most_liked"];
+  const orderNames = [
+    "Por nombre",
+    "Más reciente",
+    "Más antiguo",
+    "Mejor valorado",
+  ];
 
   // hooks
   const [filterValue, setFilterValue] = useState<number>(
@@ -100,25 +105,23 @@ export default function ListToolBar({ isLoading }: ListToolBarProps) {
 
       <div className="border-l border-border"></div>
       <div className="flex flex-row flex-1 flex-nowrap gap-3 items-end">
-        <div className="flex  flex-1 flex-col flex-nowrap gap-1">
-          <Select
-            size={"sm"}
-            disabled={isLoading}
-            placeholder={"Género"}
-            options={genres}
-            selection={genreValue}
-            onSelect={handleGenreChange}
-          />
-        </div>
-        <div className="flex flex-1 flex-col flex-nowrap gap-1">
-          <Select
-            size={"sm"}
-            disabled={isLoading}
-            options={orderNames}
-            selection={filterValue}
-            onSelect={handleFilterChange}
-          />
-        </div>
+        <Select
+          size={"sm"}
+          disabled={isLoading}
+          placeholder={"Género"}
+          options={genres}
+          selection={genreValue}
+          onSelect={handleGenreChange}
+        />
+
+        <Select
+          size={"sm"}
+          disabled={isLoading}
+          options={orderNames}
+          selection={filterValue}
+          onSelect={handleFilterChange}
+        />
+
         <Button
           disabled={
             isLoading || (genre == null && sort == null && search == null)

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { cn } from "@/lib/utils";
 
@@ -7,9 +7,9 @@ import ChordDiagram from "./chord-diagram";
 import PublicationBodySkeleton from "./publication-body-skeleton";
 
 import { ArrowDownToDot, Minus, MoveDown, MoveUp, X } from "lucide-react";
-import { Button } from "../input/button";
 
 type PublicationBodyProps = {
+  className?: string;
   chords?: Record<string, Array<number>>;
   body: string;
   autoscroll?: boolean;
@@ -17,6 +17,7 @@ type PublicationBodyProps = {
 };
 
 export default function PublicationBody({
+  className,
   chords,
   body,
   autoscroll = false,
@@ -24,6 +25,7 @@ export default function PublicationBody({
 }: PublicationBodyProps) {
   const [activeChord, setActiveChord] = useState<{
     chord: string;
+    element: HTMLElement;
     rect: DOMRect;
   } | null>(null);
 
@@ -32,18 +34,42 @@ export default function PublicationBody({
 
   const handleEnter = (e: React.MouseEvent, chord: string) => {
     if (!chords) return;
-
-    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    const element = e.currentTarget as HTMLElement;
+    //const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
 
     setActiveChord({
       chord,
-      rect,
+      element,
+      rect: element.getBoundingClientRect(),
     });
   };
 
   const handleLeave = () => {
     setActiveChord(null);
   };
+
+  useEffect(() => {
+    if (!activeChord) return;
+
+    const updatePosition = () => {
+      setActiveChord((current) => {
+        if (!current) return null;
+
+        return {
+          ...current,
+          rect: current.element.getBoundingClientRect(),
+        };
+      });
+    };
+
+    window.addEventListener("scroll", updatePosition, true);
+    window.addEventListener("resize", updatePosition);
+
+    return () => {
+      window.removeEventListener("scroll", updatePosition, true);
+      window.removeEventListener("resize", updatePosition);
+    };
+  }, [activeChord?.element]);
 
   const renderPreview = (text: string) => {
     if (!text) return null;
@@ -58,7 +84,10 @@ export default function PublicationBody({
         return (
           <div
             key={i}
-            className="font-bold text-primary font-mono whitespace-pre pt-3 cursor-default"
+            className={cn(
+              "font-bold text-primary font-mono whitespace-pre pt-3 cursor-default",
+              className,
+            )}
           >
             {line.split(/(\s+)/).map((part, j) =>
               part.trim().length ? (
@@ -140,7 +169,7 @@ export default function PublicationBody({
       {autoscroll && <ToggleAutoscroll />}
 
       {/* scroll container */}
-      <div className="flex-col overflow-x-scroll w-full h-full text-nowrap">
+      <div className="flex-col overflow-x-scroll w-full h-full text-nowrap text-sm">
         {renderPreview(body)}
       </div>
 

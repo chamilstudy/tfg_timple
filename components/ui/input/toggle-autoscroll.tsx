@@ -35,7 +35,7 @@ export default function ToggleAutoscroll({ disabled }: ToggleAutoScrollProps) {
     };
   }, [speed]);
   return (
-    <div className="z-10 sticky top-6 self-end">
+    <div className="z-10 sticky top-6 self-end print:hidden">
       <Label>Autodesplazamiento</Label>
       <div className="flex flex-row flex-nowrap w-min text-sm shadow">
         <Button

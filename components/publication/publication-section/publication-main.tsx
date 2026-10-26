@@ -13,7 +13,15 @@ import PublicationSettings from "./publication-settings";
 import PublicationChords from "./publication-chords";
 import PublicationBodyNew from "@/components/ui/publication/publication-body";
 import Section from "@/components/ui/layout/section";
-import { Edit, Flag, Trash } from "lucide-react";
+import {
+  Edit,
+  Flag,
+  Printer,
+  Share2,
+  Trash,
+  ThumbsUp,
+  MessageCircle,
+} from "lucide-react";
 import PublicationDialogs from "../../dialogs/publication-dialogs";
 
 // server functions
@@ -27,6 +35,11 @@ import {
 // context
 import { useAuth } from "@/contexts/auth.context";
 import toPublicationDTO from "@/lib/mappers/publication/publication.mapper";
+import ButtonGroup from "@/components/ui/input/button-group";
+import CommentList from "@/components/ui/comments/comment-list";
+import likePublication from "@/lib/domains/publication/manage-publication/like-publication";
+import ShareButton from "@/components/ui/buttons/share-button";
+import PrintButton from "@/components/ui/buttons/print-button";
 
 export default function PublicationMain() {
   const searchParams = useSearchParams();
@@ -148,6 +161,11 @@ export default function PublicationMain() {
     "-1": "-1 pasos",
   };
 
+  const handleLike = async () => {
+    const response = await likePublication({ publication_id: publicationId });
+    fetchPublicPublication();
+  };
+
   return (
     <>
       <PublicationDialogs
@@ -164,58 +182,88 @@ export default function PublicationMain() {
           publicationInfo={publicationInfo}
           isLoading={isLoading}
           action={
-            session ? (
-              !(session.user.id == publicationInfo?.user_id) ? (
-                <>
-                  <Button
-                    asChild
-                    size="sm"
-                    variant="outline"
-                    aria-label="Navegar a ajustes"
-                    onClick={() => setShowDialog("report")}
-                  >
-                    <p>
-                      <Flag />
-                      <span>Reportar</span>
-                    </p>
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Button
-                    asChild
-                    size="sm"
-                    variant="outline"
-                    aria-label="Editar canción"
-                  >
-                    <Link
-                      href={`/edit-publication?publication-id=${publicationId}`}
+            <>
+              {
+                <ButtonGroup
+                  buttons={[
+                    <Button
+                      disabled={session ? false : true}
+                      size="sm"
+                      variant={publicationInfo.is_liked ? "default" : "outline"}
+                      aria-label="Dar me gusta a la publicación"
+                      onClick={() => handleLike()}
                     >
-                      <Edit />
-                      <span>Editar</span>
-                    </Link>
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="destructive2"
-                    aria-label="Eliminar canción"
-                    onClick={() => setShowDialog("delete")}
-                  >
-                    <Trash />
-                    <span>Eliminar</span>
-                  </Button>
-                </>
-              )
-            ) : (
-              <></>
-            )
+                      <ThumbsUp />
+                      <span>{publicationInfo.likes}</span>
+                    </Button>,
+                    <Button
+                      disabled={session ? false : true}
+                      size="sm"
+                      variant={"outline"}
+                      aria-label="Comentar en publicación"
+                      onClick={() => {
+                        document.getElementById("comments")?.scrollIntoView({
+                          behavior: "smooth",
+                          block: "start",
+                        });
+                      }}
+                    >
+                      <MessageCircle />
+                      <span>{publicationInfo.comments}</span>
+                    </Button>,
+                  ]}
+                />
+              }
+              {session && session?.user.id == publicationInfo?.user_id && (
+                <ButtonGroup
+                  buttons={[
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      aria-label="Editar canción"
+                    >
+                      <Link
+                        className="flex flex-row gap-2"
+                        href={`/edit-publication?publication-id=${publicationId}`}
+                      >
+                        <Edit />
+                        <span className="responsive-hide-behavior">Editar</span>
+                      </Link>
+                    </Button>,
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      aria-label="Eliminar canción"
+                      onClick={() => setShowDialog("delete")}
+                    >
+                      <Trash />
+                      <span className="responsive-hide-behavior">Eliminar</span>
+                    </Button>,
+                  ]}
+                />
+              )}
+              <ButtonGroup buttons={[<ShareButton />, <PrintButton />]} />
+
+              {session?.user.id != publicationInfo?.user_id && (
+                <Button
+                  disabled={session ? false : true}
+                  size="sm"
+                  variant="outline"
+                  aria-label="Reportar publicación"
+                  onClick={() => setShowDialog("report")}
+                >
+                  <Flag />
+                  <span className="responsive-hide-behaviour">Reportar</span>
+                </Button>
+              )}
+            </>
           }
         />
       </Section>
 
       <hr className="w-full border-white" />
 
-      <Section>
+      <Section className="print:hidden">
         <PublicationSettings
           instrument={instrument}
           setInstrument={setInstrument}
@@ -228,13 +276,13 @@ export default function PublicationMain() {
         />
       </Section>
 
-      <hr className="w-full border-white" />
+      <hr className="w-full border-white print:hidden" />
 
       <Section>
         <PublicationChords chords={chords} isLoading={isLoading} />
       </Section>
 
-      <hr className="w-full border-white" />
+      <hr className="w-full border-white print:hidden" />
 
       <Section>
         <PublicationBodyNew
@@ -243,6 +291,10 @@ export default function PublicationMain() {
           isLoading={isLoading}
           autoscroll
         />
+      </Section>
+      <hr className="w-full border-white print:hidden" />
+      <Section className="print:hidden">
+        <CommentList />
       </Section>
     </>
   );

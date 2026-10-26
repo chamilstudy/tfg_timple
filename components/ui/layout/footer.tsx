@@ -1,9 +1,19 @@
 import { ThemeSwitcher } from "@/components/theme-switcher";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-export default function Footer() {
+type FooterProps = {
+  className: string;
+};
+
+export default function Footer({ className }: FooterProps) {
   return (
-    <footer className="w-full flex flex-col items-center justify-center border-t border-t-card mx-auto text-center text-xs bg-background">
+    <footer
+      className={cn(
+        "w-full flex flex-col items-center justify-center border-t border-t-card mx-auto text-center text-xs bg-background",
+        className,
+      )}
+    >
       <div className="flex flex-col items-center max-w-lg w-full p-6 gap-16 py-16">
         <div className="flex flex-row flex-wrap justify-center w-full gap-10">
           <div className="flex flex-col items-start gap-3">

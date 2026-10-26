@@ -19,6 +19,7 @@ import { Label } from "../../info/label";
 type ReportDialogProps = {
   publicationId?: string;
   requestId?: string;
+  commentId?: string;
   userId?: string;
   show: boolean;
   onClose: () => void;
@@ -27,6 +28,7 @@ type ReportDialogProps = {
 export default function ReportDialog({
   publicationId,
   requestId,
+  commentId,
   userId,
   show,
   onClose,
@@ -45,9 +47,10 @@ export default function ReportDialog({
     setError(undefined);
 
     const createReportActionResponse = await createReportAction({
-      reason: reason,
       publication_id: publicationId,
       request_id: requestId,
+      comment_id: commentId,
+      reason: reason,
       user_id: userId,
     });
 
@@ -84,10 +87,10 @@ export default function ReportDialog({
             }}
             className="grid gap-6"
           >
-            <div className="flex flex-col gap-x-2 gap-y-3 items-start text-xl">
+            <div className="flex flex-col gap-x-2 gap-y-3 items-start text-xl ">
               <Label
                 htmlFor="option1"
-                className="font-normal flex flex-nowrap gap-2"
+                className="font-normal flex flex-nowrap gap-2 items-center"
               >
                 <input
                   type="radio"
@@ -102,7 +105,7 @@ export default function ReportDialog({
 
               <Label
                 htmlFor="option2"
-                className="font-normal flex flex-nowrap gap-2"
+                className="font-normal flex flex-nowrap gap-2 items-center"
               >
                 <input
                   type="radio"
@@ -117,7 +120,7 @@ export default function ReportDialog({
 
               <Label
                 htmlFor="option3"
-                className="font-normal flex flex-nowrap gap-2"
+                className="font-normal flex flex-nowrap gap-2 items-center"
               >
                 <input
                   type="radio"
