@@ -37,8 +37,6 @@ export async function createCommentAction({
       comment: normalizedComment,
     });
 
-  console.log("Aqui", commentError);
-
   if (commentError) {
     return toDomainResponseDTO({
       success: false,

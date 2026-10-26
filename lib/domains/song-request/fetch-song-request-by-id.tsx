@@ -17,7 +17,7 @@ export default async function fetchSongRequestsByIdAction({
   requestId,
 }: FetchSongRequestsByIdArgs): Promise<DomainResponseDTO> {
   const supabase = await createClient();
-  console.log("hola", requestId);
+
   const { data: fetchSongRequestsData, error: fetchSongRequestsError } =
     await supabase.rpc("fetch_request_by_id", {
       p_request_id: requestId,

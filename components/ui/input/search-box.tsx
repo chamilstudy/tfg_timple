@@ -49,6 +49,7 @@ const SearchBox = React.forwardRef<HTMLInputElement, SearchBoxProps>(
           variant={"ocult_primary"}
           type="submit"
           disabled={disabled}
+          aria-label="Buscar canción por nombre, autor, album..."
           className="rounded-none pressed border-l focus-visible:ring-0"
         >
           <Search />

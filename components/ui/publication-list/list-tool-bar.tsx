@@ -31,8 +31,8 @@ export default function ListToolBar({ isLoading }: ListToolBarProps) {
   const genre = params.get("genre");
 
   // order
-  const orderOptions = ["name", "newest", "oldest", "most_liked"];
-  const orderNames = [
+  const sortOptions = ["name", "newest", "oldest", "most_liked"];
+  const sortNames = [
     "Por nombre",
     "Más reciente",
     "Más antiguo",
@@ -40,8 +40,8 @@ export default function ListToolBar({ isLoading }: ListToolBarProps) {
   ];
 
   // hooks
-  const [filterValue, setFilterValue] = useState<number>(
-    sort ? orderOptions.indexOf(sort) : 0,
+  const [sortValue, setSortValue] = useState<number>(
+    sort ? sortOptions.indexOf(sort) : 0,
   );
   const [genreValue, setGenreValue] = useState<number>(
     genre ? genres.indexOf(genre) : -1,
@@ -64,7 +64,7 @@ export default function ListToolBar({ isLoading }: ListToolBarProps) {
   const handleFilterChange = (selection: number) => {
     setParams.set("page", "1");
 
-    const value = orderOptions[selection];
+    const value = sortOptions[selection];
 
     if (value) {
       setParams.set("sort", value);
@@ -72,7 +72,7 @@ export default function ListToolBar({ isLoading }: ListToolBarProps) {
       setParams.delete("sort");
     }
 
-    setFilterValue(selection);
+    setSortValue(selection);
 
     router.push(`${pathname}?${setParams.toString()}`);
   };
@@ -106,6 +106,7 @@ export default function ListToolBar({ isLoading }: ListToolBarProps) {
       <div className="border-l border-border"></div>
       <div className="flex flex-row flex-1 flex-nowrap gap-3 items-end">
         <Select
+          ariaLabel="Seleccionar género"
           size={"sm"}
           disabled={isLoading}
           placeholder={"Género"}
@@ -115,10 +116,11 @@ export default function ListToolBar({ isLoading }: ListToolBarProps) {
         />
 
         <Select
+          ariaLabel="Seleccionar orden"
           size={"sm"}
           disabled={isLoading}
-          options={orderNames}
-          selection={filterValue}
+          options={sortNames}
+          selection={sortValue}
           onSelect={handleFilterChange}
         />
 
@@ -126,6 +128,7 @@ export default function ListToolBar({ isLoading }: ListToolBarProps) {
           disabled={
             isLoading || (genre == null && sort == null && search == null)
           }
+          aria-label="Limpiar filtros"
           size="sm"
           variant={"outline_secondary"}
           className="h-min"

@@ -39,7 +39,7 @@ export default async function fetchPublicationListAction({
       p_page_size: 10,
       p_max_publications: max_publications,
     });
-  console.log("Hola", fetchPublicationError);
+
   if (fetchPublicationError)
     return toDomainResponseDTO({
       success: false,

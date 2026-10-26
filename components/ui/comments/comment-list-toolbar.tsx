@@ -50,6 +50,7 @@ export default function CommentListToolBar({
       <div className="flex w-full md:flex-row flex-nowrap gap-3 flex-col items-end md:items-center justify-end">
         <div>
           <Select
+            ariaLabel="Selecionar orden"
             size={"sm"}
             disabled={isLoading}
             placeholder={"Ordenar"}
